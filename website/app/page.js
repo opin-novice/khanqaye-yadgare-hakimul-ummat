@@ -1,105 +1,75 @@
 import { client } from "@/lib/sanity";
 import Link from "next/link";
-import { Headphones, HelpCircle, Calendar, ArrowRight } from "lucide-react";
+import BayanCard from "@/components/BayanCard";
 
-export const revalidate = 60; // revalidate every minute if webhook isn't instant
+export const revalidate = 60;
+
+const fallbackBayans = [
+  { _id: '1', title: "তাওবা ও ইস্তিগফারের গুরুত্ব",       date: "2025-03-15", category: "Tazkiyah" },
+  { _id: '2', title: "নামাজের হাকিকত ও আত্মিক উপকার",     date: "2025-03-10", category: "General"  },
+  { _id: '3', title: "কলবের পরিশুদ্ধি — প্রথম পর্ব",       date: "2025-02-28", category: "Tazkiyah" },
+  { _id: '4', title: "দুনিয়ার মোহ থেকে মুক্তির পথ",        date: "2025-02-20", category: "Tazkiyah" },
+  { _id: '5', title: "রমজানের প্রস্তুতি কীভাবে নেবেন",     date: "2025-02-10", category: "General"  },
+  { _id: '6', title: "সবর ও শোকরের ফযিলত",                 date: "2025-01-25", category: "General"  },
+  { _id: '7', title: "আল্লাহর সাথে সম্পর্ক গড়ার উপায়",    date: "2025-01-15", category: "Tazkiyah" },
+  { _id: '8', title: "হালাল রিযিক ও বরকতের রহস্য",         date: "2025-01-05", category: "General"  }
+];
 
 export default async function Home() {
-  const bayans = await client.fetch(`*[_type == "bayan"] | order(date desc)[0...5]`);
-  const fatwas = await client.fetch(`*[_type == "fatwa"] | order(date desc)[0...5]`);
+  let bayans = [];
+  try {
+    bayans = await client.fetch(`*[_type == "bayan"]{
+      _id, title, date, category, "audioUrl": audioFile.asset->url
+    } | order(date desc)[0...5]`);
+  } catch (e) {
+    console.error("Sanity fetch failed", e);
+  }
+
+  const displayBayans = bayans.length > 0 ? bayans : fallbackBayans.slice(0, 5);
 
   return (
     <div className="space-y-12">
-      <section className="text-center py-12 bg-emerald-50 rounded-3xl border border-emerald-100">
-        <h1 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-4">
-          শাইখের আলোচনা ও ফতোয়া
-        </h1>
-        <p className="text-lg text-emerald-700 max-w-2xl mx-auto px-4">
-          শাইখের সর্বশেষ তালিম, হাদিসের দরস এবং ফতোয়ার উত্তর সমূহ শুনুন এবং পড়ুন।
-        </p>
+      <section className="text-center py-16 bg-emerald-50 rounded-[2rem] border border-emerald-100 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-emerald-100 opacity-50 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-emerald-200 opacity-50 blur-3xl"></div>
+        <div className="relative z-10">
+          <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-emerald-800 mb-6 font-bold" dir="rtl">
+            بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+          </p>
+          <h1 className="text-4xl md:text-6xl font-bold text-emerald-900 mb-6 leading-tight">
+            শায়খের বয়ান
+          </h1>
+          <p className="text-xl text-emerald-700 max-w-2xl mx-auto px-4 mb-10 font-medium">
+            প্রতিদিনের বয়ান ও আধ্যাত্মিক শিক্ষা
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/bayans" className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
+              বয়ান শুনুন →
+            </Link>
+            <Link href="/fatwas" className="bg-white hover:bg-gray-50 text-emerald-700 border border-emerald-200 font-bold text-lg px-8 py-3 rounded-full shadow-sm hover:shadow transition-all active:scale-95">
+              সব দেখুন →
+            </Link>
+          </div>
+        </div>
       </section>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Latest Bayans Section */}
-        <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-6 border-b pb-4">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <Headphones className="text-emerald-600" />
-              সর্বশেষ বয়ান
-            </h2>
-            <Link href="/bayans" className="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1">
-              সব দেখুন <ArrowRight className="w-4 h-4" />
+      <section className="max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-8 border-b pb-4">
+          <h2 className="text-3xl font-bold text-gray-800">
+            সাম্প্রতিক বয়ান
+          </h2>
+          <Link href="/bayans" className="text-emerald-600 hover:text-emerald-700 font-bold flex items-center gap-1 transition-colors">
+            সকল বয়ান দেখুন →
+          </Link>
+        </div>
+        <div className="grid gap-4">
+          {displayBayans.map((bayan) => (
+            <Link href="/bayans" key={bayan._id}>
+              <BayanCard bayan={bayan} />
             </Link>
-          </div>
-          <div className="space-y-4">
-            {bayans.length > 0 ? (
-              bayans.map((bayan) => (
-                <div key={bayan._id} className="group p-4 rounded-xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50 transition-all">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="font-semibold text-lg text-gray-900 group-hover:text-emerald-800 transition-colors">
-                        {bayan.title}
-                      </h3>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mt-2">
-                        <span className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md">
-                          {bayan.category}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {bayan.date}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {bayan.audioFile && (
-                    <div className="mt-4">
-                      {/* Note: In a real app we fetch audio URL from sanity, assuming reference */}
-                      <p className="text-sm text-emerald-600">অডিও যুক্ত আছে</p>
-                    </div>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500 italic">কোনো বয়ান পাওয়া যায়নি।</p>
-            )}
-          </div>
-        </section>
-
-        {/* Latest Fatwas Section */}
-        <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-6 border-b pb-4">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <HelpCircle className="text-emerald-600" />
-              সর্বশেষ ফতোয়া
-            </h2>
-            <Link href="/fatwas" className="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1">
-              সব দেখুন <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="space-y-4">
-            {fatwas.length > 0 ? (
-              fatwas.map((fatwa) => (
-                <div key={fatwa._id} className="group p-4 rounded-xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50 transition-all">
-                  <h3 className="font-semibold text-lg text-gray-900 group-hover:text-emerald-800 transition-colors">
-                    {fatwa.question}
-                  </h3>
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mt-2">
-                    <span className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md">
-                      {fatwa.category}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {fatwa.date}
-                    </span>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500 italic">কোনো ফতোয়া পাওয়া যায়নি।</p>
-            )}
-          </div>
-        </section>
-      </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
