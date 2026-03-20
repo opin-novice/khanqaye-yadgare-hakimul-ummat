@@ -12,26 +12,26 @@ export default function BayanCard({ bayan, onPlay }) {
   
   return (
     <div 
-      className="group p-4 bg-white rounded-xl shadow-sm border border-gray-100 hover:border-emerald-300 hover:bg-emerald-50 hover:shadow-md transition-all flex justify-between items-center cursor-pointer active:scale-[0.99]" 
+      className="group p-5 bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:bg-[#fcfaf7] hover:shadow-md transition-all flex justify-between items-center cursor-pointer active:scale-[0.99]" 
       onClick={() => onPlay && onPlay(bayan)}
     >
       <div>
-        <h3 className="font-bold text-lg text-gray-900 group-hover:text-emerald-800 transition-colors">
+        <h3 className="font-bold text-lg md:text-xl text-[#1f4e3d] group-hover:text-[#a0843c] transition-colors leading-snug">
           {bayan.title}
         </h3>
-        <div className="flex items-center gap-4 text-sm text-gray-500 mt-3">
-          <span className="flex items-center gap-1 bg-emerald-100 text-emerald-800 font-medium px-2 py-1 rounded-md text-xs">
+        <div className="flex items-center gap-4 text-sm text-[#708474] mt-3">
+          <span className="flex items-center gap-1 bg-[#f3eee1] text-[#8c7435] font-bold px-3 py-1.5 rounded-lg text-xs tracking-wide">
             {bdCategory}
           </span>
-          <span className="flex items-center gap-1 font-medium text-gray-500">
-            <Calendar className="w-3 h-3 text-gray-400" />
+          <span className="flex items-center gap-1.5 font-medium">
+            <Calendar className="w-3.5 h-3.5 text-[#a0843c]" />
             {formatBengaliDate(bayan.date)}
           </span>
         </div>
       </div>
       {onPlay && (
-        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-          <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <div className="w-12 h-12 flex-shrink-0 ml-4 rounded-full bg-[#f3eee1] flex items-center justify-center text-[#1f4e3d] group-hover:bg-[#1f4e3d] group-hover:text-[#fcfaf7] transition-all duration-300 shadow-sm border border-[#e8dfce] group-hover:border-[#1f4e3d]">
+          <svg className="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </div>
       )}
     </div>

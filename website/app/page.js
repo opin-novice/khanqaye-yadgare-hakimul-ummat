@@ -28,43 +28,48 @@ export default async function Home() {
   const displayBayans = bayans.length > 0 ? bayans : fallbackBayans.slice(0, 5);
 
   return (
-    <div className="space-y-12">
-      <section className="text-center py-16 bg-emerald-50 rounded-[2rem] border border-emerald-100 shadow-sm relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-emerald-100 opacity-50 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-emerald-200 opacity-50 blur-3xl"></div>
-        <div className="relative z-10">
-          <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-emerald-800 mb-6 font-bold" dir="rtl">
+    <div className="space-y-16">
+      {/* Hero Section */}
+      <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">
+        {/* Abstract shapes for background elegance */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#3a735b] opacity-20 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#c4a962] opacity-10 blur-3xl"></div>
+        
+        <div className="relative z-10 px-4">
+          <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-6 font-medium tracking-wider" dir="rtl">
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
           </p>
-          <h1 className="text-4xl md:text-6xl font-bold text-emerald-900 mb-6 leading-tight">
-            শায়খের বয়ান
+          <h1 className="text-5xl md:text-7xl font-extrabold text-[#fcfaf7] mb-6 leading-tight tracking-tight drop-shadow-sm">
+            খাইরুল কুরুন খানকাহ
           </h1>
-          <p className="text-xl text-emerald-700 max-w-2xl mx-auto px-4 mb-10 font-medium">
-            প্রতিদিনের বয়ান ও আধ্যাত্মিক শিক্ষা
+          <p className="text-xl md:text-2xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-medium leading-relaxed">
+            তাজকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ<br/>
+            <span className="text-lg opacity-80 mt-2 block">শাইখুল হাদীস মুফতি মুহসিনুল করিম (দাঃবাঃ)</span>
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/bayans" className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+            <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#1f4e3d] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
               বয়ান শুনুন →
             </Link>
-            <Link href="/fatwas" className="bg-white hover:bg-gray-50 text-emerald-700 border border-emerald-200 font-bold text-lg px-8 py-3 rounded-full shadow-sm hover:shadow transition-all active:scale-95">
-              সব দেখুন →
+            <Link href="/fatwas" className="bg-transparent hover:bg-[#28634e] text-[#fcfaf7] border border-[#3a735b] font-bold text-lg px-8 py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
+              ফতোয়া পড়ুন
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8 border-b pb-4">
-          <h2 className="text-3xl font-bold text-gray-800">
+      {/* Latest Bayans Section */}
+      <section className="max-w-4xl mx-auto px-2">
+        <div className="flex justify-between items-center mb-8 border-b border-[#e8dfce] pb-4">
+          <h2 className="text-3xl font-bold text-[#1f4e3d]">
             সাম্প্রতিক বয়ান
           </h2>
-          <Link href="/bayans" className="text-emerald-600 hover:text-emerald-700 font-bold flex items-center gap-1 transition-colors">
+          <Link href="/bayans" className="text-[#8c7435] hover:text-[#c4a962] font-bold flex items-center gap-1 transition-colors text-lg">
             সকল বয়ান দেখুন →
           </Link>
         </div>
         <div className="grid gap-4">
           {displayBayans.map((bayan) => (
-            <Link href="/bayans" key={bayan._id}>
+            <Link href="/bayans" key={bayan._id} className="block">
               <BayanCard bayan={bayan} />
             </Link>
           ))}

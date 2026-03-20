@@ -22,9 +22,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="bn">
-      <body className={`${hindSiliguri.variable} ${amiri.variable} font-bengali min-h-screen flex flex-col bg-gray-50 text-gray-900 antialiased`}>
+      <body className={`${hindSiliguri.variable} ${amiri.variable} font-bengali min-h-screen flex flex-col bg-[#fcfaf7] text-[#2c3e30] antialiased selection:bg-[#c4a962] selection:text-white`}>
         <Navbar />
-        <main className="flex-grow flex flex-col max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-grow flex flex-col max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           {children}
         </main>
       </body>
