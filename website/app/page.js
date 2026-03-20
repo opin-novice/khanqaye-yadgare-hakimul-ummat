@@ -40,7 +40,7 @@ export default async function Home() {
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
           </p>
           <h1 className="text-5xl md:text-7xl font-extrabold text-[#fcfaf7] mb-6 leading-tight tracking-tight drop-shadow-sm">
-            খাইরুল কুরুন খানকাহ
+            খানকায়ে ইয়াদগারে হাকিমুল উম্মত
           </h1>
           <p className="text-xl md:text-2xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-medium leading-relaxed">
             তাজকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ<br/>
