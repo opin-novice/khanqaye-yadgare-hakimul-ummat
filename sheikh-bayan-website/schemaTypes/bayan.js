@@ -17,15 +17,8 @@ export default {
       },
       {
         name: 'category',
-        title: 'Category',
+        title: 'Category (বিভাগ — বাংলায় লিখুন)',
         type: 'string',
-        options: {
-          list: [
-            { title: 'Tafseer', value: 'তাফসির' },
-            { title: 'Jumuah', value: 'জুমুআহ' },
-            { title: 'Dars', value: 'দরস' }
-          ]
-        },
         validation: Rule => Rule.required()
       },
       {
