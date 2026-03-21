@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { formatBengaliDate } from "@/lib/bengali";
 import { Calendar, Download } from "lucide-react";
+import { normalizeArchiveUrl } from "@/lib/archive";
 
 export default function BayanCard({ bayan }) {
   const [playing, setPlaying] = useState(false);
 
   const bdCategory = bayan.category || "";
+  // Ensure the audio URL is a stable archive.org/download/ link
+  const stableAudioUrl = normalizeArchiveUrl(bayan.audioUrl);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:shadow-md transition-all overflow-hidden">
@@ -30,11 +33,11 @@ export default function BayanCard({ bayan }) {
           </div>
         </div>
 
-        {bayan.audioUrl && (
+        {stableAudioUrl && (
           <div className="flex items-center gap-2 flex-shrink-0">
             {/* Simple Direct Download Button — Reverted to 'Previous Easy' way */}
             <a
-              href={bayan.audioUrl}
+              href={stableAudioUrl}
               download
               target="_blank"
               rel="noopener noreferrer"
@@ -68,13 +71,13 @@ export default function BayanCard({ bayan }) {
       </div>
 
       {/* Inline Audio Player */}
-      {playing && bayan.audioUrl && (
+      {playing && stableAudioUrl && (
         <div className="border-t border-[#e8dfce] bg-[#fcfaf7] px-5 py-4">
           <audio
             controls
             autoPlay
             className="w-full h-10 accent-[#1f4e3d]"
-            src={bayan.audioUrl}
+            src={stableAudioUrl}
           />
         </div>
       )}
