@@ -3,15 +3,16 @@ import BayansClient from "./client";
 
 export const revalidate = 60;
 
+const mockAudioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 const fallbackBayans = [
-  { _id: '1', title: "তাওবা ও ইস্তিগফারের গুরুত্ব",       date: "2025-03-15", category: "Tazkiyah" },
-  { _id: '2', title: "নামাজের হাকিকত ও আত্মিক উপকার",     date: "2025-03-10", category: "General"  },
-  { _id: '3', title: "কলবের পরিশুদ্ধি — প্রথম পর্ব",       date: "2025-02-28", category: "Tazkiyah" },
-  { _id: '4', title: "দুনিয়ার মোহ থেকে মুক্তির পথ",        date: "2025-02-20", category: "Tazkiyah" },
-  { _id: '5', title: "রমজানের প্রস্তুতি কীভাবে নেবেন",     date: "2025-02-10", category: "General"  },
-  { _id: '6', title: "সবর ও শোকরের ফযিলত",                 date: "2025-01-25", category: "General"  },
-  { _id: '7', title: "আল্লাহর সাথে সম্পর্ক গড়ার উপায়",    date: "2025-01-15", category: "Tazkiyah" },
-  { _id: '8', title: "হালাল রিযিক ও বরকতের রহস্য",         date: "2025-01-05", category: "General"  }
+  { _id: '1', title: "তাওবা ও ইস্তিগফারের গুরুত্ব",       date: "2025-03-15", category: "Tazkiyah", audioUrl: mockAudioUrl },
+  { _id: '2', title: "নামাজের হাকিকত ও আত্মিক উপকার",     date: "2025-03-10", category: "General" , audioUrl: mockAudioUrl },
+  { _id: '3', title: "কলবের পরিশুদ্ধি — প্রথম পর্ব",       date: "2025-02-28", category: "Tazkiyah", audioUrl: mockAudioUrl },
+  { _id: '4', title: "দুনিয়ার মোহ থেকে মুক্তির পথ",        date: "2025-02-20", category: "Tazkiyah", audioUrl: mockAudioUrl },
+  { _id: '5', title: "রমজানের প্রস্তুতি কীভাবে নেবেন",     date: "2025-02-10", category: "General" , audioUrl: mockAudioUrl },
+  { _id: '6', title: "সবর ও শোকরের ফযিলত",                 date: "2025-01-25", category: "General" , audioUrl: mockAudioUrl },
+  { _id: '7', title: "আল্লাহর সাথে সম্পর্ক গড়ার উপায়",    date: "2025-01-15", category: "Tazkiyah", audioUrl: mockAudioUrl },
+  { _id: '8', title: "হালাল রিযিক ও বরকতের রহস্য",         date: "2025-01-05", category: "General" , audioUrl: mockAudioUrl }
 ];
 
 export default async function BayansPage() {
@@ -22,7 +23,7 @@ export default async function BayansPage() {
       title,
       date,
       category,
-      "audioUrl": audioFile.asset->url
+      audioUrl
     } | order(date desc)`;
     bayans = await client.fetch(query);
   } catch (e) {
