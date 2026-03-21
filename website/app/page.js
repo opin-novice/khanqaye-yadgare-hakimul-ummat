@@ -1,41 +1,42 @@
 import { client } from "@/lib/sanity";
 import Link from "next/link";
 import BayanCard from "@/components/BayanCard";
+import MajlisCountdown from "@/components/MajlisCountdown";
+import ScheduleAndMap from "@/components/ScheduleAndMap";
+import ContactUs from "@/components/ContactUs";
 
 export const revalidate = 60;
 
 const mockAudioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 const fallbackBayans = [
-  { _id: '1', title: "তাওবা ও ইস্তিগফারের গুরুত্ব",       date: "2025-03-15", category: "Tazkiyah", audioUrl: mockAudioUrl },
-  { _id: '2', title: "নামাজের হাকিকত ও আত্মিক উপকার",     date: "2025-03-10", category: "General" , audioUrl: mockAudioUrl },
-  { _id: '3', title: "কলবের পরিশুদ্ধি — প্রথম পর্ব",       date: "2025-02-28", category: "Tazkiyah", audioUrl: mockAudioUrl },
-  { _id: '4', title: "দুনিয়ার মোহ থেকে মুক্তির পথ",        date: "2025-02-20", category: "Tazkiyah", audioUrl: mockAudioUrl },
-  { _id: '5', title: "রমজানের প্রস্তুতি কীভাবে নেবেন",     date: "2025-02-10", category: "General" , audioUrl: mockAudioUrl },
-  { _id: '6', title: "সবর ও শোকরের ফযিলত",                 date: "2025-01-25", category: "General" , audioUrl: mockAudioUrl },
-  { _id: '7', title: "আল্লাহর সাথে সম্পর্ক গড়ার উপায়",    date: "2025-01-15", category: "Tazkiyah", audioUrl: mockAudioUrl },
-  { _id: '8', title: "হালাল রিযিক ও বরকতের রহস্য",         date: "2025-01-05", category: "General" , audioUrl: mockAudioUrl }
+  { _id: '1', title: "তাওবা ও ইস্তিগফারের গুরুত্ব",       date: "2025-03-15", category: "তাযকিয়াহ", audioUrl: mockAudioUrl },
+  { _id: '2', title: "নামাজের হাকিকত ও আত্মিক উপকার",     date: "2025-03-10", category: "সাধারণ",    audioUrl: mockAudioUrl },
+  { _id: '3', title: "কলবের পরিশুদ্ধি — প্রথম পর্ব",       date: "2025-02-28", category: "তাযকিয়াহ", audioUrl: mockAudioUrl },
+  { _id: '4', title: "দুনিয়ার মোহ থেকে মুক্তির পথ",        date: "2025-02-20", category: "তাযকিয়াহ", audioUrl: mockAudioUrl },
+  { _id: '5', title: "রমজানের প্রস্তুতি কীভাবে নেবেন",     date: "2025-02-10", category: "সাধারণ",    audioUrl: mockAudioUrl },
 ];
 
 export default async function Home() {
   let bayans = [];
+  let nextMajlis = null;
   try {
-    bayans = await client.fetch(`*[_type == "bayan"]{
-      _id, title, date, category, audioUrl
-    } | order(date desc)[0...5]`);
+    [bayans, nextMajlis] = await Promise.all([
+      client.fetch(`*[_type == "bayan"]{ _id, title, date, category, audioUrl } | order(date desc)[0...5]`),
+      client.fetch(`*[_type == "nextMajlis"][0]{ title, datetime }`),
+    ]);
   } catch (e) {
     console.error("Sanity fetch failed", e);
   }
 
-  const displayBayans = bayans.length > 0 ? bayans : fallbackBayans.slice(0, 5);
+  const displayBayans = bayans.length > 0 ? bayans : fallbackBayans;
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-12">
       {/* Hero Section */}
       <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">
-        {/* Abstract shapes for background elegance */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#3a735b] opacity-20 blur-3xl"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#c4a962] opacity-10 blur-3xl"></div>
-        
+
         <div className="relative z-10 px-4">
           <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-6 font-medium tracking-wider" dir="rtl">
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
@@ -58,23 +59,32 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Majlis Countdown (only renders if admin has set a datetime in Sanity) */}
+      {nextMajlis && <MajlisCountdown nextMajlis={nextMajlis} />}
+
       {/* Latest Bayans Section */}
       <section className="max-w-4xl mx-auto px-2">
         <div className="flex justify-between items-center mb-8 border-b border-[#e8dfce] pb-4">
-          <h2 className="text-3xl font-bold text-[#1f4e3d]">
-            সাম্প্রতিক বয়ান
-          </h2>
+          <h2 className="text-3xl font-bold text-[#1f4e3d]">সাম্প্রতিক বয়ান</h2>
           <Link href="/bayans" className="text-[#8c7435] hover:text-[#c4a962] font-bold flex items-center gap-1 transition-colors text-lg">
             সকল বয়ান দেখুন →
           </Link>
         </div>
         <div className="grid gap-4">
           {displayBayans.map((bayan) => (
-            <Link href="/bayans" key={bayan._id} className="block">
-              <BayanCard bayan={bayan} />
-            </Link>
+            <BayanCard key={bayan._id} bayan={bayan} />
           ))}
         </div>
+      </section>
+
+      {/* Schedule and Map */}
+      <section className="max-w-4xl mx-auto px-2">
+        <ScheduleAndMap />
+      </section>
+
+      {/* Contact Us */}
+      <section className="max-w-4xl mx-auto px-2">
+        <ContactUs />
       </section>
     </div>
   );
