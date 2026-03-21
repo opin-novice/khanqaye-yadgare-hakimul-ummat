@@ -17,14 +17,13 @@ export default function ScheduleAndMap() {
           <div className="w-12 h-12 rounded-full bg-[#f3eee1] flex items-center justify-center group-hover:bg-[#1f4e3d] transition-colors">
             <MapPin className="w-6 h-6 text-[#1f4e3d] group-hover:text-[#fcfaf7] transition-colors" />
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[#1f4e3d]">শিডিউল এবং মানচিত্র</h2>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[#1f4e3d]">শিডিউল এবং লোকেশন</h2>
         </div>
         <ChevronDown className={`w-6 h-6 text-[#1f4e3d] transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
       </button>
 
-      {/* Expandable Content */}
       {open && (
-        <div className="bg-white border border-[#e8dfce] rounded-[2rem] p-6 md:p-10 shadow-md space-y-8 animate-fade-in">
+        <div className="bg-white border border-[#e8dfce] rounded-[2rem] p-6 md:p-10 shadow-md space-y-8">
           {/* Schedule Info */}
           <div className="bg-[#f3eee1] border border-[#e8dfce] rounded-2xl p-6 md:p-8">
             <p className="text-lg md:text-xl font-bold text-[#1f4e3d] leading-relaxed">
@@ -32,19 +31,20 @@ export default function ScheduleAndMap() {
             </p>
           </div>
 
-          {/* Google Maps Embed */}
+          {/* Precise Google Maps iframe using exact coords from the pin URL */}
           <div className="rounded-2xl overflow-hidden border border-[#e8dfce] shadow-sm">
             <iframe
-              title="Jamia Yunusia Madrasa Location"
-              src="https://maps.google.com/maps?q=Jamia+Yunusia+Madrasa+Brahmanbaria&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              title="জামিয়া ইউনুছিয়া মাদ্রাসা, ব্রাহ্মণবাড়িয়া"
+              src="https://maps.google.com/maps?q=23.9601,91.1115&z=16&output=embed"
               width="100%"
-              height="350"
+              height="380"
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            />
           </div>
+
           <a
             href="https://maps.app.goo.gl/kn98iSfrqWM3XnMH9"
             target="_blank"
