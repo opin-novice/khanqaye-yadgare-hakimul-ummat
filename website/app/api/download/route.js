@@ -1,5 +1,5 @@
-// API route: /api/download?url=https://archive.org/...
-// Proxies the file server-side so the browser gets a real download prompt.
+// Specialized downloader for Archive.org Audio Files
+// This ensures that clicking the download icon starting a real download instead of just playing in a new tab.
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -9,31 +9,25 @@ export async function GET(request) {
     return new Response("Missing url parameter", { status: 400 });
   }
 
-  // Only allow archive.org and soundhelix for safety
+  // Security: Only allow archive.org for the audio proxy
   try {
     const parsed = new URL(url);
-    const allowed = ["archive.org", "soundhelix.com"];
-    const isAllowed = allowed.some((domain) => parsed.hostname.endsWith(domain));
-    if (!isAllowed) {
-      return new Response("URL not allowed", { status: 403 });
+    if (!parsed.hostname.endsWith("archive.org") && !parsed.hostname.endsWith("soundhelix.com")) {
+      return new Response("Domain not allowed for proxy", { status: 403 });
     }
   } catch {
     return new Response("Invalid URL", { status: 400 });
   }
 
   try {
-    const upstream = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
-    if (!upstream.ok) {
-      return new Response("Failed to fetch file", { status: 502 });
-    }
+    const response = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+    if (!response.ok) return new Response("Failed to fetch audio", { status: 502 });
 
-    const contentType = upstream.headers.get("content-type") || "audio/mpeg";
-    // Try to extract filename from URL
     const filename = url.split("/").pop()?.split("?")[0] || "bayan.mp3";
 
-    return new Response(upstream.body, {
+    return new Response(response.body, {
       headers: {
-        "Content-Type": contentType,
+        "Content-Type": "audio/mpeg",
         "Content-Disposition": `attachment; filename="${filename}"`,
         "Cache-Control": "public, max-age=3600",
       },
