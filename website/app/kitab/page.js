@@ -44,10 +44,8 @@ export default async function KitabPage() {
               </div>
 
               <a
-                href={kitab.pdfUrl}
+                href={`/api/download?url=${encodeURIComponent(kitab.pdfUrl)}`}
                 download
-                target="_blank"
-                rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-[#1f4e3d] text-[#fcfaf7] font-bold px-5 py-2.5 rounded-xl hover:bg-[#c4a962] hover:text-[#1f4e3d] transition-all shadow-sm flex-shrink-0 ml-4 text-sm md:text-base"
               >
                 <Download className="w-4 h-4" />

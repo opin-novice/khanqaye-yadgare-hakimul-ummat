@@ -31,17 +31,17 @@ export default function ScheduleAndMap() {
             </p>
           </div>
 
-          {/* Precise Google Maps iframe using exact coords from the pin URL */}
+          {/* Exact Google Maps Embed from user's pin */}
           <div className="rounded-2xl overflow-hidden border border-[#e8dfce] shadow-sm">
             <iframe
-              title="জামিয়া ইউনুছিয়া মাদ্রাসা, ব্রাহ্মণবাড়িয়া"
-              src="https://maps.google.com/maps?q=23.9601,91.1115&z=16&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d145.41304032588846!2d91.11286438270389!3d23.97220469652798!2m3!1f340.8080797109631!2f0!3f0!3m2!1i1024!2i768!4f37.22855810692414!5e1!3m2!1sen!2sbd!4v1774122722788!5m2!1sen!2sbd"
               width="100%"
               height="380"
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="খানকায়ে ইয়াদগারে হাকিমুল উম্মত — লোকেশন"
             />
           </div>
 
