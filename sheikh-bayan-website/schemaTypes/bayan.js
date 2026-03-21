@@ -29,12 +29,9 @@ export default {
         validation: Rule => Rule.required()
       },
       {
-        name: 'audioFile',
-        title: 'Audio File',
-        type: 'file',
-        options: {
-          accept: 'audio/*'
-        },
+        name: 'audioUrl',
+        title: 'Audio URL (Internet Archive.org Link)',
+        type: 'url',
         validation: Rule => Rule.required()
       }
     ]
