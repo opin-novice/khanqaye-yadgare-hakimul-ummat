@@ -9,6 +9,36 @@ export default function BayanCard({ bayan }) {
 
   const bdCategory = bayan.category || "";
 
+  const handleDownload = async (e, url, title) => {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    const originalContent = btn.innerHTML;
+    
+    try {
+      btn.innerHTML = `<svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+      btn.style.pointerEvents = "none";
+
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Download failed");
+      
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${title || "bayan"}.mp3`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Client download failed, falling back to proxy", err);
+      window.location.href = `/api/download?url=${encodeURIComponent(url)}`;
+    } finally {
+      btn.innerHTML = originalContent;
+      btn.style.pointerEvents = "auto";
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:shadow-md transition-all overflow-hidden">
       {/* Top Row: info + action buttons */}
@@ -32,15 +62,14 @@ export default function BayanCard({ bayan }) {
 
         {bayan.audioUrl && (
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Download button — using proxy for Archive.org files to force download */}
-            <a
-              href={`/api/download?url=${encodeURIComponent(bayan.audioUrl)}`}
-              download
+            {/* Download button — using client-side fetch to avoid Vercel timeouts */}
+            <button
+              onClick={(e) => handleDownload(e, bayan.audioUrl, bayan.title)}
               title="ডাউনলোড করুন"
               className="w-10 h-10 rounded-full flex items-center justify-center bg-[#f3eee1] text-[#8c7435] border border-[#e8dfce] hover:bg-[#c4a962] hover:text-white hover:border-[#c4a962] transition-all"
             >
               <Download className="w-4 h-4" />
-            </a>
+            </button>
 
             {/* Play / Pause button */}
             <button
