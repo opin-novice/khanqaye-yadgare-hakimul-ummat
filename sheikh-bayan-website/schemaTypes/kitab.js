@@ -10,9 +10,17 @@ export default {
       validation: Rule => Rule.required()
     },
     {
+      name: 'cover',
+      title: 'Book Cover (কিতাবের প্রচ্ছদ)',
+      type: 'image',
+      options: {
+        hotspot: true
+      }
+    },
+    {
       name: 'pdfUrl',
-      title: 'PDF URL (Archive.org Link)',
-      description: 'Archive.org এ আপলোড করে লিংক পেস্ট করুন',
+      title: 'PDF URL (Archive.org / Drive Link)',
+      description: 'Google Drive বা Archive.org এর লিংক পেস্ট করুন',
       type: 'url',
       validation: Rule => Rule.required()
     }
