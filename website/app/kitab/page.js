@@ -1,5 +1,6 @@
 import { client } from "@/lib/sanity";
-import { Download, BookOpen } from "lucide-react";
+import { Download, BookOpen, Eye } from "lucide-react";
+import { getDriveViewUrl, getDriveDownloadUrl } from "@/lib/drive";
 
 export const revalidate = 60;
 
@@ -32,7 +33,7 @@ export default async function KitabPage() {
           kitabs.map((kitab) => (
             <div
               key={kitab._id}
-              className="group flex items-center justify-between bg-white border border-[#e8dfce] rounded-2xl p-5 md:p-6 shadow-sm hover:border-[#c4a962] hover:shadow-md transition-all"
+              className="group flex flex-col sm:flex-row sm:items-center justify-between bg-white border border-[#e8dfce] rounded-2xl p-5 md:p-6 shadow-sm hover:border-[#c4a962] hover:shadow-md transition-all gap-4"
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#f3eee1] flex items-center justify-center flex-shrink-0 group-hover:bg-[#1f4e3d] transition-colors">
@@ -43,14 +44,29 @@ export default async function KitabPage() {
                 </h2>
               </div>
 
-              <a
-                href={`/api/download?url=${encodeURIComponent(kitab.pdfUrl)}`}
-                download
-                className="flex items-center gap-2 bg-[#1f4e3d] text-[#fcfaf7] font-bold px-5 py-2.5 rounded-xl hover:bg-[#c4a962] hover:text-[#1f4e3d] transition-all shadow-sm flex-shrink-0 ml-4 text-sm md:text-base"
-              >
-                <Download className="w-4 h-4" />
-                ডাউনলোড
-              </a>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {/* Preview / Read Button */}
+                <a
+                  href={getDriveViewUrl(kitab.pdfUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#f3eee1] text-[#1f4e3d] font-bold px-5 py-2.5 rounded-xl hover:bg-[#e8dfce] transition-all shadow-sm text-sm"
+                >
+                  <Eye className="w-4 h-4" />
+                  পড়ুন
+                </a>
+
+                {/* Download Button */}
+                <a
+                  href={getDriveDownloadUrl(kitab.pdfUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#1f4e3d] text-[#fcfaf7] font-bold px-5 py-2.5 rounded-xl hover:bg-[#c4a962] hover:text-[#1f4e3d] transition-all shadow-sm text-sm"
+                >
+                  <Download className="w-4 h-4" />
+                  ডাউনলোড
+                </a>
+              </div>
             </div>
           ))
         ) : (

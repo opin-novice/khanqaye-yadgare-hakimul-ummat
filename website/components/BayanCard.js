@@ -32,10 +32,12 @@ export default function BayanCard({ bayan }) {
 
         {bayan.audioUrl && (
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Download button — routes through server proxy for cross-origin files */}
+            {/* Download button — using direct link for Archive.org files */}
             <a
-              href={`/api/download?url=${encodeURIComponent(bayan.audioUrl)}`}
+              href={bayan.audioUrl}
               download
+              target="_blank"
+              rel="noopener noreferrer"
               title="ডাউনলোড করুন"
               className="w-10 h-10 rounded-full flex items-center justify-center bg-[#f3eee1] text-[#8c7435] border border-[#e8dfce] hover:bg-[#c4a962] hover:text-white hover:border-[#c4a962] transition-all"
             >
