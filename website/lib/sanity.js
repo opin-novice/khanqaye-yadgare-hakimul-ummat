@@ -1,5 +1,5 @@
 import { createClient } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
+import createImageUrlBuilder from "@sanity/image-url";
 
 export const client = createClient({
   // Hardcoded as fallback to ensure the website is always connected to the right project
@@ -9,7 +9,7 @@ export const client = createClient({
   useCdn: false, // Set to false to get fresh data immediately (important for LIVE)
 });
 
-const builder = imageUrlBuilder(client);
+const builder = createImageUrlBuilder(client);
 
 export function urlFor(source) {
   return builder.image(source);

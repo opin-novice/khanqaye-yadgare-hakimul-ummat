@@ -47,8 +47,9 @@ export default function LivePage() {
       <div className="min-h-[80vh] bg-[#0F1419] flex flex-col items-center justify-center p-4">
         {/* Load HLS script from CDN for broad compatibility */}
         <Script 
-          src="https://cdn.jsdelivr.net/npm/hls.js@latest" 
-          strategy="beforeInteractive"
+          src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js" 
+          strategy="afterInteractive"
+          onLoad={() => console.log("HLS.js Script loaded successfully")}
         />
         
         <LiveAudioPlayer playbackUrl={settings.livePlaybackUrl} />
