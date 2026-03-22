@@ -10,20 +10,18 @@ export default function LivePage() {
   const [loading, setLoading] = useState(true);
 
   const fetchSettings = async () => {
-    // Safety exit for initial loading after 5 seconds
-    const safetyTimeout = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-
     try {
-      const response = await fetch('/api/live-status');
+      console.log("Fetching live status from API...");
+      const response = await fetch('/api/live-status', { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
-      console.log("INTERNAL API STATUS:", data); 
+      console.log("API Response:", data); 
       setSettings(data);
     } catch (e) {
-      console.error("Live page fetch error", e);
+      console.error("Live page fetch error:", e.message);
+      // Set default settings on error to allow page to finish loading
+      setSettings({ isLive: false });
     } finally {
-      clearTimeout(safetyTimeout);
       setLoading(false);
     }
   };
