@@ -4,6 +4,7 @@ import BayanCard from "@/components/BayanCard";
 import MajlisCountdown from "@/components/MajlisCountdown";
 import ScheduleAndMap from "@/components/ScheduleAndMap";
 import ContactUs from "@/components/ContactUs";
+import HomeCards from "@/components/HomeCards";
 
 export const revalidate = 60;
 
@@ -58,6 +59,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* New Image Cards Section (Swipeable) */}
+      <HomeCards />
 
       {/* Majlis Countdown (only renders if admin has set a datetime in Sanity) */}
       {nextMajlis && <MajlisCountdown nextMajlis={nextMajlis} />}
