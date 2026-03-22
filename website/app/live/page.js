@@ -35,9 +35,9 @@ export default function LivePage() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-[80vh] flex flex-col items-center justify-center bg-[#0F1419]">
+      <div className="min-h-[80vh] flex flex-col items-center justify-center bg-[#0F1419] text-center p-4">
         <div className="w-12 h-12 border-4 border-[#c4a962]/20 border-t-[#c4a962] rounded-full animate-spin mb-4"></div>
-        <p className="text-[#F0F4F8] text-lg">লোড হচ্ছে...</p>
+        <p className="text-[#F0F4F8] text-xl font-bold">লাইভ চেক করা হচ্ছে...</p>
       </div>
     );
   }

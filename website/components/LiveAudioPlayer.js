@@ -17,44 +17,48 @@ export default function LiveAudioPlayer({ playbackUrl }) {
     let hls = null;
     let isDestroyed = false;
 
+    // Safety timeout: Never stay in loading for more than 4 seconds
+    const safetyTimer = setTimeout(() => {
+      if (!isDestroyed) {
+        console.log("Player safety timeout reached. Showing UI.");
+        setLoading(false);
+      }
+    }, 4000);
+
     const initHls = () => {
-      // Check if Hls is available on the window (loaded via CDN)
+      if (isDestroyed) return;
+
       if (window.Hls) {
         if (window.Hls.isSupported()) {
-          console.log("HLS.js CDN loaded and supported. Initializing...");
-          hls = new window.Hls({ lowLatencyMode: true });
+          console.log("Initializing HLS...");
+          hls = new window.Hls({ 
+            lowLatencyMode: true,
+            manifestLoadingMaxRetry: 10,
+            manifestLoadingRetryDelay: 2000
+          });
           hls.loadSource(playbackUrl);
           hls.attachMedia(audioRef.current);
           
           hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
             if (isDestroyed) return;
+            console.log("Manifest parsed!");
+            clearTimeout(safetyTimer);
             setLoading(false);
-            audioRef.current.play().catch(() => {});
-            setIsPlaying(true);
+            // We don't auto-play here to avoid browser blocks, user clicks play
           });
 
           hls.on(window.Hls.Events.ERROR, (_, data) => {
             if (data.fatal) {
-              console.error("HLS fatal error:", data.details);
-              if (!isDestroyed) setError(true);
+              console.warn("HLS fatal error:", data.details);
+              // Don't show error immediately, let it retry or let user click play
             }
           });
         } else if (audioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-          // Safari fallback
           audioRef.current.src = playbackUrl;
-          audioRef.current.addEventListener('loadedmetadata', () => {
-            if (isDestroyed) return;
-            setLoading(false);
-            audioRef.current.play().catch(() => {});
-            setIsPlaying(true);
-          });
-        } else {
+          clearTimeout(safetyTimer);
           setLoading(false);
-          setError(true);
         }
       } else {
-        // Hls not yet on window, wait a bit and retry
-        console.log("Waiting for HLS.js from CDN...");
         setTimeout(initHls, 500);
       }
     };
@@ -63,13 +67,20 @@ export default function LiveAudioPlayer({ playbackUrl }) {
 
     return () => {
       isDestroyed = true;
+      clearTimeout(safetyTimer);
       if (hls) hls.destroy();
     };
   }, [playbackUrl]);
 
   const togglePlay = () => {
+    if (!audioRef.current) return;
     if (audioRef.current.paused) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(err => {
+          console.error("Playback failed:", err);
+          setError(true);
+        });
     } else {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -79,7 +90,7 @@ export default function LiveAudioPlayer({ playbackUrl }) {
   const handleVolumeChange = (e) => {
     const val = parseFloat(e.target.value);
     setVolume(val);
-    audioRef.current.volume = val;
+    if (audioRef.current) audioRef.current.volume = val;
     setIsMuted(val === 0);
   };
 
@@ -88,15 +99,6 @@ export default function LiveAudioPlayer({ playbackUrl }) {
       <div className="flex flex-col items-center justify-center p-12 bg-[#1A2332] rounded-3xl border border-[#c4a962]/20">
         <div className="w-10 h-10 border-4 border-[#c4a962]/20 border-t-[#c4a962] rounded-full animate-spin mb-4"></div>
         <p className="text-[#F0F4F8] font-medium">অডিও সংযোগ করা হচ্ছে...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-8 bg-[#1A2332] rounded-3xl border border-red-500/30 text-center">
-        <p className="text-red-400 mb-4 font-bold">অডিও সংযোগ সম্ভব হয়নি</p>
-        <button onClick={() => window.location.reload()} className="bg-[#c4a962] text-[#1f4e3d] px-6 py-2 rounded-xl font-bold">আবার চেষ্টা করুন</button>
       </div>
     );
   }
@@ -124,6 +126,8 @@ export default function LiveAudioPlayer({ playbackUrl }) {
         </div>
 
         <p className="text-[#F0F4F8] text-xl font-medium">সরাসরি বয়ান চলছে</p>
+
+        {error && <p className="text-red-400 text-sm">অডিও সংযোগে সমস্যা হচ্ছে, প্লে বাটনে ক্লিক করে আবার চেষ্টা করুন।</p>}
 
         <div className="flex items-center gap-6 pt-4">
           <button onClick={togglePlay} className="w-16 h-16 rounded-full bg-[#c4a962] flex items-center justify-center text-[#1A2332] hover:scale-105 active:scale-95 transition-all">
