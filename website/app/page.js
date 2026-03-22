@@ -5,6 +5,7 @@ import MajlisCountdown from "@/components/MajlisCountdown";
 import ScheduleAndMap from "@/components/ScheduleAndMap";
 import ContactUs from "@/components/ContactUs";
 import HomeCards from "@/components/HomeCards";
+import LiveBanner from "@/components/LiveBanner";
 
 export const revalidate = 60;
 
@@ -36,6 +37,7 @@ export default async function Home() {
 
   return (
     <div className="space-y-12">
+      <LiveBanner />
       {/* New Image Cards Section (Full-Width Carousel) */}
       <HomeCards newsTicker={newsTicker} />
 
