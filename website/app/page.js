@@ -33,6 +33,9 @@ export default async function Home() {
 
   return (
     <div className="space-y-12">
+      {/* New Image Cards Section (Full-Width Carousel) */}
+      <HomeCards />
+
       {/* Hero Section */}
       <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#3a735b] opacity-20 blur-3xl"></div>
@@ -59,9 +62,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      {/* New Image Cards Section (Swipeable) */}
-      <HomeCards />
 
       {/* Majlis Countdown (only renders if admin has set a datetime in Sanity) */}
       {nextMajlis && <MajlisCountdown nextMajlis={nextMajlis} />}
