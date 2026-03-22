@@ -10,6 +10,11 @@ export default function LivePage() {
   const [loading, setLoading] = useState(true);
 
   const fetchSettings = async () => {
+    // Safety exit for initial loading after 5 seconds
+    const safetyTimeout = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+
     try {
       const response = await fetch('/api/live-status');
       const data = await response.json();
@@ -18,6 +23,7 @@ export default function LivePage() {
     } catch (e) {
       console.error("Live page fetch error", e);
     } finally {
+      clearTimeout(safetyTimeout);
       setLoading(false);
     }
   };
