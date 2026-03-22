@@ -20,21 +20,24 @@ const fallbackBayans = [
 export default async function Home() {
   let bayans = [];
   let nextMajlis = null;
+  let siteSettings = null;
   try {
-    [bayans, nextMajlis] = await Promise.all([
+    [bayans, nextMajlis, siteSettings] = await Promise.all([
       client.fetch(`*[_type == "bayan"]{ _id, title, date, category, audioUrl } | order(date desc)[0...5]`),
       client.fetch(`*[_type == "nextMajlis"][0]{ title, datetime }`),
+      client.fetch(`*[_type == "siteSettings"][0]{ newsTicker }`),
     ]);
   } catch (e) {
     console.error("Sanity fetch failed", e);
   }
 
   const displayBayans = bayans.length > 0 ? bayans : fallbackBayans;
+  const newsTicker = siteSettings?.newsTicker || "";
 
   return (
     <div className="space-y-12">
       {/* New Image Cards Section (Full-Width Carousel) */}
-      <HomeCards />
+      <HomeCards newsTicker={newsTicker} />
 
       {/* Hero Section */}
       <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">

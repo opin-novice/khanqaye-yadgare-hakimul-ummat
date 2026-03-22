@@ -1,85 +1,96 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default function HomeCards() {
+export default function HomeCards({ newsTicker = "" }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const scrollRef = useRef(null);
-  
-  const cards = [
-    { src: "/card_1.png", alt: "Khanqah Banner 1" },
-    { src: "/card_2.png", alt: "Khanqah Banner 2" },
-  ];
+  const [isMobile, setIsMobile] = useState(false);
 
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const index = Math.round(scrollLeft / clientWidth);
-      setActiveIndex(index);
-    }
-  };
+  const desktopCards = ["/card_1.png", "/card_2.png"];
+  const mobileCards = ["/mobile_card_1.png", "/mobile_card_2.png"];
 
-  const scrollTo = (index) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        left: index * scrollRef.current.clientWidth,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // Handle responsive check
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Auto-swipe functionality with fade transition
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % 2);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentCards = isMobile ? mobileCards : desktopCards;
 
   return (
     <section className="w-full bg-white flex flex-col items-center">
-      {/* Carousel Container */}
-      <div 
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar w-full"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        {cards.map((card, index) => (
-          <div 
-            key={index} 
-            className="flex-shrink-0 w-full snap-center"
+      {/* Carousel Container - Fade Transition */}
+      <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[550px] overflow-hidden">
+        {currentCards.map((src, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              activeIndex === index ? "opacity-100 z-10" : "opacity-0 z-0"
+            }`}
           >
-            {/* 
-              Mobile: Taller height for a "more fulfilling" look (300px min).
-              Desktop: Naturally wide.
-              Using object-cover ensures it fills the container without distortion (some cropping on sides on mobile).
-            */}
-            <div className="relative w-full h-[250px] sm:h-[400px] lg:h-[500px]">
-              <Image
-                src={card.src}
-                alt={card.alt}
-                fill
-                className="object-cover"
-                priority={index === 0}
-              />
-            </div>
+            <Image
+              src={src}
+              alt={`Banner ${index + 1}`}
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         ))}
       </div>
-      
-      {/* Navigation Dots (Now placed BELOW the photo) */}
-      <div className="flex justify-center gap-3 py-6">
-        {cards.map((_, index) => (
+
+      {/* Navigation Dots */}
+      <div className="flex justify-center gap-3 py-4">
+        {[0, 1].map((index) => (
           <button
             key={index}
-            onClick={() => scrollTo(index)}
-            className={`transition-all duration-300 shadow-sm rounded-full ${
-              activeIndex === index 
-                ? "bg-[#c4a962] scale-110 w-8 h-2.5" 
-                : "bg-[#e8dfce] hover:bg-[#c4a962]/50 w-2.5 h-2.5"
+            onClick={() => setActiveIndex(index)}
+            className={`transition-all duration-300 rounded-full ${
+              activeIndex === index
+                ? "bg-[#c4a962] w-8 h-2.5"
+                : "bg-[#e8dfce] w-2.5 h-2.5"
             }`}
-            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
 
+      {/* News Ticker / Marquee Section */}
+      {newsTicker && (
+        <div className="w-full bg-[#1f4e3d] py-3 overflow-hidden border-y border-[#c4a962]/30 shadow-sm">
+          <div className="whitespace-nowrap flex marquee-animation">
+            <span className="text-[#fcfaf7] text-lg font-bold px-4">
+              {newsTicker}
+            </span>
+            {/* Duplicate for seamless infinite scroll */}
+            <span className="text-[#fcfaf7] text-lg font-bold px-4">
+              {newsTicker}
+            </span>
+            <span className="text-[#fcfaf7] text-lg font-bold px-4">
+              {newsTicker}
+            </span>
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
+        .marquee-animation {
+          display: inline-block;
+          animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.33%); }
         }
       `}</style>
     </section>
