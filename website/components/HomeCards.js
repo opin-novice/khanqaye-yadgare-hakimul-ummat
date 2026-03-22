@@ -30,7 +30,7 @@ export default function HomeCards() {
   };
 
   return (
-    <section className="w-full relative group bg-white">
+    <section className="w-full bg-white flex flex-col items-center">
       {/* Carousel Container */}
       <div 
         ref={scrollRef}
@@ -44,31 +44,33 @@ export default function HomeCards() {
             className="flex-shrink-0 w-full snap-center"
           >
             {/* 
-              To ensure the photos are NOT CROPPED and stay UNEDITED:
-              We use a simple <img> with w-full h-auto inside the snap-container.
-              But for Next.js Image component, we'll use sizes and style for auto-height.
+              Mobile: Taller height for a "more fulfilling" look (300px min).
+              Desktop: Naturally wide.
+              Using object-cover ensures it fills the container without distortion (some cropping on sides on mobile).
             */}
-            <div className="w-full h-auto">
-              <img
+            <div className="relative w-full h-[250px] sm:h-[400px] lg:h-[500px]">
+              <Image
                 src={card.src}
                 alt={card.alt}
-                className="w-full h-auto block"
+                fill
+                className="object-cover"
+                priority={index === 0}
               />
             </div>
           </div>
         ))}
       </div>
       
-      {/* Navigation Dots */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 z-10">
+      {/* Navigation Dots (Now placed BELOW the photo) */}
+      <div className="flex justify-center gap-3 py-6">
         {cards.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`w-3.5 h-3.5 rounded-full transition-all duration-300 shadow-md border-2 border-white ${
+            className={`transition-all duration-300 shadow-sm rounded-full ${
               activeIndex === index 
-                ? "bg-[#c4a962] scale-125 px-4" 
-                : "bg-white/40 hover:bg-white/70"
+                ? "bg-[#c4a962] scale-110 w-8 h-2.5" 
+                : "bg-[#e8dfce] hover:bg-[#c4a962]/50 w-2.5 h-2.5"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
