@@ -10,7 +10,8 @@ export default function LiveBanner() {
 
   const checkLive = async () => {
     try {
-      const data = await client.fetch(`*[_type == "siteSettings"][0] { isLive }`);
+      const response = await fetch('/api/live-status');
+      const data = await response.json();
       setIsLive(!!data?.isLive);
     } catch (e) {
       console.error("Live banner fetch error", e);

@@ -11,7 +11,8 @@ export default function Navbar() {
   useEffect(() => {
     const checkLive = async () => {
       try {
-        const data = await client.fetch(`*[_type == "siteSettings"][0] { isLive }`);
+        const response = await fetch('/api/live-status');
+        const data = await response.json();
         setIsLive(!!data?.isLive);
       } catch (e) {
         console.error("Navbar live fetch error", e);

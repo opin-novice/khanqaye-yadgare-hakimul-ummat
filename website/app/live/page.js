@@ -11,7 +11,9 @@ export default function LivePage() {
 
   const fetchSettings = async () => {
     try {
-      const data = await client.fetch(`*[_type == "siteSettings"][0] { isLive, livePlaybackUrl }`);
+      const response = await fetch('/api/live-status');
+      const data = await response.json();
+      console.log("INTERNAL API STATUS:", data); 
       setSettings(data);
     } catch (e) {
       console.error("Live page fetch error", e);
