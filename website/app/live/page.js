@@ -2,80 +2,98 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import LiveAudioPlayer from '@/components/LiveAudioPlayer';
 
 export default function LivePage() {
-  const [settings, setSettings] = useState(null);
-  const [status, setStatus] = useState('loading'); // 'loading' | 'online' | 'offline'
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
-  const fetchStatus = async () => {
+  const checkStatus = async () => {
     try {
-      console.log("Checking live server status...");
-      const response = await fetch('/api/live-status', { cache: 'no-store' });
-      const data = await response.json();
-      console.log("Server response:", data);
-      
-      if (data && data.isLive === true && data.livePlaybackUrl) {
-        setSettings(data);
-        setStatus('online');
-      } else {
-        setSettings(data);
-        setStatus('offline');
-      }
-    } catch (e) {
-      console.error("Status check failed:", e);
-      setStatus('offline'); // Default to offline on error
+      console.log("DIAGNOSTIC: Checking status...");
+      const res = await fetch('/api/live-status', { cache: 'no-store' });
+      const json = await res.json();
+      console.log("DIAGNOSTIC: Received:", json);
+      setData(json);
+    } catch (err) {
+      console.error("DIAGNOSTIC: Fetch failed:", err);
+      setError(err.message);
     }
   };
 
   useEffect(() => {
-    fetchStatus();
-    const interval = setInterval(fetchStatus, 30000);
-    return () => clearInterval(interval);
+    checkStatus();
+    const timer = setInterval(checkStatus, 15000);
+    return () => clearInterval(timer);
   }, []);
 
-  // LOADING STATE
-  if (status === 'loading') {
+  // 1. Initial Loading (No data yet)
+  if (!data && !error) {
     return (
-      <div className="min-h-[80vh] flex flex-col items-center justify-center bg-[#0F1419] text-center p-4">
-        <div className="w-12 h-12 border-4 border-[#c4a962]/20 border-t-[#c4a962] rounded-full animate-spin mb-4"></div>
-        <p className="text-[#F0F4F8] text-xl font-bold">সার্ভার চেক করা হচ্ছে</p>
-        <p className="text-[#8899A6] mt-2">অনুগ্রহ করে কিছুক্ষণ অপেক্ষা করুন...</p>
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-10 font-sans">
+        <div className="animate-spin h-10 w-10 border-4 border-emerald-500 border-t-transparent rounded-full mb-4" />
+        <h2 className="text-2xl font-bold">সার্ভারের সাথে সংযুক্ত হওয়া হচ্ছে...</h2>
+        <p className="text-gray-400 mt-2">Checking Live status...</p>
       </div>
     );
   }
 
-  // ONLINE STATE
-  if (status === 'online' && settings?.livePlaybackUrl) {
+  // 2. Error State
+  if (error) {
     return (
-      <div className="min-h-[80vh] bg-[#0F1419] flex flex-col items-center justify-center p-4">
-        <LiveAudioPlayer playbackUrl={settings.livePlaybackUrl} />
-        <p className="mt-8 text-[#8899A6] text-sm italic">
-          সরাসরি বয়ান শেষ হলে পেজটি স্বাভাবিক অবস্থায় ফিরে আসবে
-        </p>
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-10">
+        <div className="text-red-500 text-6xl mb-4">⚠️</div>
+        <h2 className="text-2xl font-bold">নেটওয়ার্ক এরর</h2>
+        <p className="text-gray-400 mt-2">{error}</p>
+        <button onClick={() => window.location.reload()} className="mt-6 bg-white text-black px-6 py-2 rounded-full font-bold">Retry</button>
       </div>
     );
   }
 
-  // OFFLINE STATE
+  // 3. Online State
+  if (data?.isLive) {
+    return (
+      <div className="min-h-screen bg-[#0F1419] flex flex-col items-center justify-center p-6 text-white font-sans">
+        <div className="w-full max-w-xl bg-[#1A2332] rounded-[3rem] p-10 shadow-2xl border border-emerald-500/20 text-center space-y-8">
+          <div className="flex items-center justify-center gap-2 text-emerald-500 font-bold tracking-widest text-sm uppercase">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            LIVE BROADCASTING
+          </div>
+
+          <p className="text-4xl text-emerald-400 font-serif" dir="rtl">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+          
+          <h1 className="text-3xl font-bold text-gray-100">সরাসরি বয়ান চলছে</h1>
+
+          {/* Diagnostic Player (Standard Audio Tag) */}
+          <div className="py-6 flex flex-col items-center gap-4 bg-black/30 rounded-3xl">
+            <audio 
+              src={data.livePlaybackUrl} 
+              controls 
+              autoPlay 
+              className="w-full max-w-sm accent-emerald-500"
+            />
+            <p className="text-xs text-gray-500">Note: Audio may take 10-20sec to start</p>
+          </div>
+
+          <p className="text-sm text-gray-500 italic">বয়ান শেষ না হওয়া পর্যন্ত এটি চলবে।</p>
+        </div>
+        
+        <Link href="/" className="mt-10 text-emerald-500 hover:underline">← ফিরে যান</Link>
+      </div>
+    );
+  }
+
+  // 4. Offline State
   return (
-    <div className="min-h-[80vh] bg-[#0F1419] flex flex-col items-center justify-center text-center p-6">
-      <div className="text-8xl mb-8 grayscale opacity-50">🕌</div>
-      <h1 className="text-3xl md:text-4xl font-bold text-[#F0F4F8] mb-4">
-        এখন সরাসরি কোনো অনুষ্ঠান নেই
-      </h1>
-      <p className="text-[#8899A6] text-lg max-w-md mx-auto mb-10">
-        যখনই লাইভ বয়ান শুরু হবে, এই পেজটি স্বয়ংক্রিয়ভাবে প্লেয়ারে পরিণত হবে।
-      </p>
-      <div className="space-y-6">
-        <Link 
-          href="/bayans" 
-          className="inline-block bg-[#c4a962]/10 text-[#c4a962] border border-[#c4a962]/30 px-8 py-3 rounded-2xl font-bold hover:bg-[#c4a962]/20 transition-all"
-        >
-          রেকর্ড করা বয়ান শুনুন →
-        </Link>
-        <p className="text-[#8899A6] text-xs">অটো-রিফ্রেশ মোড চালু আছে</p>
-      </div>
+    <div className="min-h-screen bg-[#0F1419] flex flex-col items-center justify-center p-10 text-white text-center">
+      <div className="text-8xl mb-8 opacity-20">🌙</div>
+      <h2 className="text-4xl font-bold mb-4">এখন লাইভ বয়ান নেই</h2>
+      <p className="text-gray-400 max-w-md mx-auto mb-10">শায়খ যখন সরাসরি বয়ান শুরু করবেন, এখানে প্লেয়ারটি স্বয়ংক্রিয়ভাবে চালু হবে।</p>
+      <Link href="/bayans" className="bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-emerald-500/20">
+        রেকর্ড করা বয়ান শুনুন
+      </Link>
     </div>
   );
 }
