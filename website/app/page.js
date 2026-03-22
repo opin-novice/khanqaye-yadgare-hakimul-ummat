@@ -46,7 +46,7 @@ export default async function Home() {
           </h1>
           <p className="text-xl md:text-2xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-medium leading-relaxed">
             তাজকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ<br/>
-            <span className="text-lg opacity-80 mt-2 block">শাইখুল হাদীস মুফতি মুহসিনুল করিম (দাঃবাঃ)</span>
+            <span className="text-lg opacity-80 mt-2 block">তরজুমানে আকাবির আরেফবিল্লাহ হযরত মাওলানা মুফতি মুহসিনুল করিম সাহেব (দাঃবাঃ)</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#1f4e3d] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
