@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
-import { Play, Pause, Volume2, VolumeX, Radio } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
 /**
  * CONSOLIDATED LIVE PAGE & PLAYER
@@ -47,9 +47,11 @@ export default function LivePage() {
 
   // 2. Initialize Player when ONLINE
   useEffect(() => {
-    if (status !== 'ONLINE' || !data?.livePlaybackUrl || !audioRef.current) return;
+    // Only initialize or re-initialize if the status OR the playback URL actually changes
+    const playbackUrl = data?.livePlaybackUrl;
+    if (status !== 'ONLINE' || !playbackUrl || !audioRef.current) return;
 
-    console.log("LOG: Online mode active. Initializing player...");
+    console.log("LOG: Initializing/Updating player for URL:", playbackUrl);
     let hlsInstance = null;
     let isMounted = true;
 
@@ -67,22 +69,30 @@ export default function LivePage() {
       if (window.Hls) {
         if (window.Hls.isSupported()) {
           console.log("LOG: HLS.js Found. Loading stream...");
-          hlsInstance = new window.Hls({ lowLatencyMode: true });
+          hlsInstance = new window.Hls({ 
+            lowLatencyMode: true,
+            manifestLoadingMaxRetry: 10,
+            manifestLoadingRetryDelay: 2000
+          });
           hlsRef.current = hlsInstance;
-          hlsInstance.loadSource(data.livePlaybackUrl);
+          hlsInstance.loadSource(playbackUrl);
           hlsInstance.attachMedia(audioRef.current);
           
           hlsInstance.on(window.Hls.Events.MANIFEST_PARSED, () => {
             console.log("LOG: Manifest Ready.");
-            clearTimeout(loaderTimer);
-            setPlayerLoading(false);
+            if (isMounted) {
+              clearTimeout(loaderTimer);
+              setPlayerLoading(false);
+            }
           });
 
           hlsInstance.on(window.Hls.Events.ERROR, (_, d) => {
             if (d.fatal) {
               console.error("LOG: FATAL ERROR:", d.details);
-              setError(true);
-              setPlayerLoading(false);
+              if (isMounted) {
+                setError(true);
+                setPlayerLoading(false);
+              }
             }
           });
         }
@@ -99,9 +109,10 @@ export default function LivePage() {
       clearTimeout(loaderTimer);
       if (hlsRef.current) hlsRef.current.destroy();
     };
-  }, [status, data]);
+  }, [status, data?.livePlaybackUrl]); // KEY FIX: Depend on playbackUrl, not the entire data object
 
   const togglePlay = () => {
+    if (!audioRef.current) return;
     if (audioRef.current.paused) {
       audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.error("Play failed", e));
     } else {
@@ -126,8 +137,7 @@ export default function LivePage() {
       <div className="min-h-[85vh] bg-[#0F1419] flex flex-col items-center justify-center p-6 text-center text-white">
         <div className="text-8xl mb-6 opacity-30 grayscale">🌙</div>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">এখন লাইভ বয়ান নেই</h2>
-        <p className="text-gray-400 mb-10 max-w-sm">বয়ান শুরু হলে এই পেজটি স্বয়ংক্রিয়ভাবে চালু হবে।</p>
-        <Link href="/bayans" className="bg-[#c4a962] text-[#1f4e3d] px-10 py-4 rounded-2xl font-bold shadow-2xl">পূর্বের বয়ান শুনুন</Link>
+        <Link href="/bayans" className="bg-[#c4a962] text-[#1f4e3d] px-10 py-4 rounded-2xl font-bold">পূর্বের বয়ান শুনুন</Link>
       </div>
     );
   }
@@ -142,7 +152,7 @@ export default function LivePage() {
       />
 
       {playerLoading ? (
-        <div className="flex flex-col items-center justify-center p-12 bg-[#1A2332] rounded-3xl border border-emerald-500/20 text-white shadow-2xl">
+        <div className="flex flex-col items-center justify-center p-12 bg-[#1A2332] rounded-3xl border border-emerald-500/20 text-white">
           <div className="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4" />
           <p className="font-medium">অডিও সংযোগ করা হচ্ছে...</p>
         </div>
