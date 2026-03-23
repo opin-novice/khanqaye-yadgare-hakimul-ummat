@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function HomeCards({ newsTicker = "" }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const scrollRef = useRef(null);
 
-  const desktopCards = ["/card_1.png", "/card_2.png"];
-  const mobileCards = ["/mobile_card_1.png", "/mobile_card_2.png"];
+  const desktopCards = ["/card_1.webp", "/card_2.webp"];
+  const mobileCards = ["/mobile_card_1.webp", "/mobile_card_2.webp"];
 
   // Handle responsive check
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function HomeCards({ newsTicker = "" }) {
   // Auto-swipe functionality with fade transition
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % 2);
+      setActiveIndex((prev) => (prev + 1) % desktopCards.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -30,17 +30,18 @@ export default function HomeCards({ newsTicker = "" }) {
 
   return (
     <section className="w-full bg-white flex flex-col items-center">
-      {/* 
-        Carousel Container - Fade Transition 
-        Using h-auto to ensure images dictate their own height without CROPPING.
-      */}
       <div className="relative w-full overflow-hidden">
-        {/* We use a hidden placeholder image of the first card to maintain the aspect ratio of the container automatically */}
-        <img 
-          src={currentCards[0]} 
-          alt="spacer" 
-          className="w-full h-auto opacity-0 invisible pointer-events-none" 
-        />
+        {/* Aspect ratio spacer for absolute images */}
+        <div className="invisible pointer-events-none">
+          <Image
+            src={currentCards[0]}
+            alt="spacer"
+            width={1200}
+            height={400}
+            className="w-full h-auto"
+            priority={true}
+          />
+        </div>
         
         {currentCards.map((src, index) => (
           <div
@@ -49,17 +50,20 @@ export default function HomeCards({ newsTicker = "" }) {
               activeIndex === index ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            {/* Standard img w-full h-auto is the most reliable way to avoid any cropping */}
-            <img
+            <Image
               src={src}
               alt={`Banner ${index + 1}`}
+              width={isMobile ? 800 : 1200}
+              height={isMobile ? 1200 : 400}
               className="w-full h-auto block"
+              priority={index === 0} // LCP optimization for first image
+              quality={75}
             />
           </div>
         ))}
       </div>
 
-      {/* Navigation Dots (Placed strictly BELOW the photo) */}
+      {/* Navigation Dots */}
       <div className="flex justify-center gap-3 py-4 bg-white w-full">
         {currentCards.map((_, index) => (
           <button
@@ -74,7 +78,7 @@ export default function HomeCards({ newsTicker = "" }) {
         ))}
       </div>
 
-      {/* News Ticker / Marquee Section */}
+      {/* News Ticker */}
       {newsTicker && (
         <div className="w-full bg-[#1f4e3d] py-3 overflow-hidden border-y border-[#c4a962]/30 shadow-sm relative z-20">
           <div className="whitespace-nowrap flex marquee-animation">

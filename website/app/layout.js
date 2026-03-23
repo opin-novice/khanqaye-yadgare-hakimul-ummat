@@ -6,13 +6,17 @@ import Footer from "@/components/Footer";
 const hindSiliguri = Hind_Siliguri({ 
   subsets: ["bengali"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-hind-siliguri"
+  variable: "--font-hind-siliguri",
+  display: "swap",
+  preload: true,
 });
 
 const amiri = Amiri({
   subsets: ["arabic"],
   weight: ["400", "700"],
-  variable: "--font-amiri"
+  variable: "--font-amiri",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata = {
