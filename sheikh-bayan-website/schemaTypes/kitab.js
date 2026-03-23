@@ -19,9 +19,9 @@ export default {
     },
     {
       name: 'pdfUrl',
-      title: 'PDF URL (Archive.org / Drive Link)',
-      description: 'Google Drive বা Archive.org এর লিংক পেস্ট করুন',
-      type: 'url',
+      title: 'PDF Path or URL (পিডিএফ মেমোরি / লিংক)',
+      description: "ইন্সট্যান্ট লোডিংয়ের জন্য '/books/filename.pdf' দিন। অথবা Google Drive / Archive.org লিংক দিন।",
+      type: 'string',
       validation: Rule => Rule.required()
     }
   ]
