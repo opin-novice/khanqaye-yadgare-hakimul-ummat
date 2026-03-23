@@ -34,7 +34,7 @@ export default function ScheduleAndMap() {
           {/* Exact Google Maps Embed from user's pin */}
           <div className="rounded-2xl overflow-hidden border border-[#e8dfce] shadow-sm">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d145.413!2d91.112759!3d23.972181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDU4JzE5LjkiTiA5McKwMDYnNDUuOSJF!5e0!3m2!1sen!2sbd!4v1711100000000!5m2!1sen!2sbd"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7500!2d91.112759!3d23.972181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDU4JzE5LjkiTiA5McKwMDYnNDUuOSJF!5e0!3m2!1sen!2sbd!4v1711100000000!5m2!1sen!2sbd"
               width="100%"
               height="450"
               style={{ border: 0 }}
