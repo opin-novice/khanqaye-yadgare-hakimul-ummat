@@ -8,6 +8,9 @@ import { normalizeArchiveUrl } from "@/lib/archive";
 export default function BayanCard({ bayan }) {
   const [playing, setPlaying] = useState(false);
 
+  const bdCategory = bayan.category || "";
+  const stableAudioUrl = normalizeArchiveUrl(bayan.audioUrl);
+
   const handleShare = async () => {
     const shareData = {
       title: bayan.title,

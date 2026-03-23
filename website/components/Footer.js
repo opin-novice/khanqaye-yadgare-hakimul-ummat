@@ -15,7 +15,7 @@ export default function Footer() {
 
         {/* Main quote */}
         <p className="text-xl md:text-2xl font-bold text-[#fcfaf7] leading-relaxed mb-4 tracking-wide">
-          "সোহবতে ওলী আল্লাহ—নফসের ইসলাহ ও ক্বলবের নূরের সবচেয়ে নিশ্চিত মাধ্যম।"
+          "সোহবতে আহলুল্লাহ—নফসের ইসলাহ ও ক্বলবের নূরের সবচেয়ে নিশ্চিত মাধ্যম।"
         </p>
 
         <div className="flex items-center justify-center gap-4 mt-8 mb-10">
