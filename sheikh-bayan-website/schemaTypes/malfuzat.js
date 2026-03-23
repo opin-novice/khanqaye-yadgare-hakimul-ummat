@@ -18,6 +18,10 @@ export default defineType({
       options: {
         source: 'title',
         maxLength: 96,
+        slugify: input => input
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .slice(0, 200)
       },
       validation: Rule => Rule.required()
     }),
