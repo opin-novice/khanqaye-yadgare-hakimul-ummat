@@ -19,8 +19,14 @@ export const metadata = {
   title: "শায়খের বয়ান",
   description: "প্রতিদিনের বয়ান ও আধ্যাত্মিক শিক্ষা",
   icons: {
-    icon: "/logo_1.png",
-    apple: "/logo_1.png",
+    icon: [
+      { url: "/logo_1.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo_1.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/logo_1.png",
+    apple: [
+      { url: "/logo_1.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

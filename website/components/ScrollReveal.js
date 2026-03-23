@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 export default function ScrollReveal({ children, className = "" }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const domRef = useRef();
 
   useEffect(() => {
+    setHasMounted(true);
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -14,7 +16,7 @@ export default function ScrollReveal({ children, className = "" }) {
           observer.unobserve(domRef.current);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 }); // Lower threshold for better mobile trigger
 
     const current = domRef.current;
     if (current) observer.observe(current);
@@ -24,10 +26,14 @@ export default function ScrollReveal({ children, className = "" }) {
     };
   }, []);
 
+  // On server or before mount, show content but without animation class
+  // To prevent "flashing" or hidden content if JS is slow
+  const showContent = !hasMounted || isVisible;
+
   return (
     <div
       ref={domRef}
-      className={`${className} ${isVisible ? "animate-fade-up" : "opacity-0"}`}
+      className={`${className} ${showContent ? (isVisible ? "animate-fade-up" : "") : "opacity-0"}`}
     >
       {children}
     </div>
