@@ -34,9 +34,9 @@ export default function ScheduleAndMap() {
           {/* Exact Google Maps Embed from user's pin */}
           <div className="rounded-2xl overflow-hidden border border-[#e8dfce] shadow-sm">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d145.41304032588846!2d91.11286438270389!3d23.97220469652798!2m3!1f340.8080797109631!2f0!3f0!3m2!1i1024!2i768!4f37.22855810692414!5e1!3m2!1sen!2sbd!4v1774122722788!5m2!1sen!2sbd"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d145.413!2d91.112759!3d23.972181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDU4JzE5LjkiTiA5McKwMDYnNDUuOSJF!5e0!3m2!1sen!2sbd!4v1711100000000!5m2!1sen!2sbd"
               width="100%"
-              height="380"
+              height="450"
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
@@ -46,7 +46,7 @@ export default function ScheduleAndMap() {
           </div>
 
           <a
-            href="https://maps.app.goo.gl/kn98iSfrqWM3XnMH9"
+            href="https://maps.app.goo.gl/ziKvkhMp5SwQ1jKD9" 
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#1f4e3d] text-[#fcfaf7] font-bold px-6 py-3 rounded-xl hover:bg-[#163a2d] transition-colors shadow-md"
