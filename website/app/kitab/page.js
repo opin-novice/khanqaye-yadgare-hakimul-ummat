@@ -8,8 +8,8 @@ export const revalidate = 60;
 export default async function KitabPage() {
   let kitabs = [];
   try {
-    // Added cover to the fetch query
-    kitabs = await client.fetch(`*[_type == "kitab"] | order(_createdAt desc) { _id, title, cover, pdfUrl }`);
+    // Sorted from Oldest to Newest (New additions appear at the end)
+    kitabs = await client.fetch(`*[_type == "kitab"] | order(_createdAt asc) { _id, title, cover, pdfUrl }`);
   } catch (e) {
     console.error("Sanity fetch failed", e);
   }
