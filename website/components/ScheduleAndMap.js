@@ -46,7 +46,7 @@ export default function ScheduleAndMap() {
           </div>
 
           <a
-            href="https://maps.app.goo.gl/ziKvkhMp5SwQ1jKD9" 
+            href="https://www.google.com/maps/dir/?api=1&destination=23.972181,91.112759" 
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#1f4e3d] text-[#fcfaf7] font-bold px-6 py-3 rounded-xl hover:bg-[#163a2d] transition-colors shadow-md"
