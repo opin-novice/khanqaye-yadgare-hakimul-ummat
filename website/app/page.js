@@ -108,12 +108,6 @@ export default async function Home() {
         </section>
       </ScrollReveal>
 
-      {/* Schedule and Map */}
-      <ScrollReveal>
-        <section className="max-w-4xl mx-auto px-2">
-          <ScheduleAndMap />
-        </section>
-      </ScrollReveal>
 
       {/* Contact Us */}
       <ScrollReveal>
