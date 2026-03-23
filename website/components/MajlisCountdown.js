@@ -11,17 +11,32 @@ export default function MajlisCountdown({ nextMajlis }) {
     setMounted(true);
     if (!nextMajlis?.datetime) return;
 
-    const target = new Date(nextMajlis.datetime).getTime();
+    const ONE_HOUR = 60 * 60 * 1000;
+    const WEEK = 7 * 24 * 60 * 60 * 1000;
 
     const tick = () => {
-      const diff = target - Date.now();
-      if (diff <= 0) { setExpired(true); return; }
-      setTimeLeft({
-        days:    Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours:   Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
-      });
+      let target = new Date(nextMajlis.datetime).getTime();
+      const now = Date.now();
+
+      // Auto-recurrence logic: If more than 1 hour has passed since target, jump 7 days forward
+      while (now > target + ONE_HOUR) {
+        target += WEEK;
+      }
+
+      const diff = target - now;
+
+      // Show "Started" message for exactly 1 hour window
+      if (now >= target && now <= target + ONE_HOUR) {
+        setExpired(true);
+      } else {
+        setExpired(false);
+        setTimeLeft({
+          days:    Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours:   Math.floor((diff / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((diff / (1000 * 60)) % 60),
+          seconds: Math.floor((diff / 1000) % 60),
+        });
+      }
     };
 
     tick();
