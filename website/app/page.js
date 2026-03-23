@@ -8,7 +8,6 @@ import HomeCards from "@/components/HomeCards";
 import LiveBanner from "@/components/LiveBanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import AnnouncementBox from "@/components/AnnouncementBox";
-import MalfuzatSection from "@/components/MalfuzatSection";
 
 export const revalidate = 60;
 
@@ -25,14 +24,12 @@ export default async function Home() {
   let bayans = [];
   let nextMajlis = null;
   let siteSettings = null;
-  let malfuzat = [];
 
   try {
-    [bayans, nextMajlis, siteSettings, malfuzat] = await Promise.all([
+    [bayans, nextMajlis, siteSettings] = await Promise.all([
       client.fetch(`*[_type == "bayan"]{ _id, title, date, category, audioUrl } | order(date desc)[0...5]`),
       client.fetch(`*[_type == "nextMajlis"][0]{ title, datetime }`),
       client.fetch(`*[_type == "siteSettings"][0]{ newsTicker, showAnnouncement, announcementMessage }`),
-      client.fetch(`*[_type == "malfuzat"] | order(date desc)[0...5]`),
     ]);
   } catch (e) {
     console.error("Sanity fetch failed", e);
@@ -104,10 +101,12 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Malfuzat Section (NEW) */}
-      <section className="max-w-4xl mx-auto px-2">
-        <MalfuzatSection malfuzat={malfuzat} />
-      </section>
+      {/* Schedule and Map */}
+      <ScrollReveal>
+        <section className="max-w-4xl mx-auto px-2">
+          <ScheduleAndMap />
+        </section>
+      </ScrollReveal>
 
       {/* Schedule and Map */}
       <ScrollReveal>
