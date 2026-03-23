@@ -6,6 +6,7 @@ import ScheduleAndMap from "@/components/ScheduleAndMap";
 import ContactUs from "@/components/ContactUs";
 import HomeCards from "@/components/HomeCards";
 import LiveBanner from "@/components/LiveBanner";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const revalidate = 60;
 
@@ -38,38 +39,43 @@ export default async function Home() {
   return (
     <div className="space-y-12">
       <LiveBanner />
-      {/* New Image Cards Section (Full-Width Carousel) */}
       <HomeCards newsTicker={newsTicker} />
 
       {/* Hero Section */}
-      <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#3a735b] opacity-20 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#c4a962] opacity-10 blur-3xl"></div>
+      <ScrollReveal>
+        <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#3a735b] opacity-20 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#c4a962] opacity-10 blur-3xl"></div>
 
-        <div className="relative z-10 px-4">
-          <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-6 font-medium tracking-wider" dir="rtl">
-            بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
-          </p>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-[#fcfaf7] mb-6 leading-tight tracking-tight drop-shadow-sm">
-            খানকায়ে ইয়াদগারে হাকিমুল উম্মত
-          </h1>
-          <p className="text-xl md:text-2xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-medium leading-relaxed">
-            তাজকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ<br/>
-            <span className="text-lg opacity-80 mt-2 block">তরজুমানে আকাবির আরেফবিল্লাহ হযরত মাওলানা মুফতি মুহসিনুল করিম সাহেব (দাঃবাঃ)</span>
-          </p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-            <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#1f4e3d] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
-              বয়ান শুনুন →
-            </Link>
-            <Link href="/fatwas" className="bg-transparent hover:bg-[#28634e] text-[#fcfaf7] border border-[#3a735b] font-bold text-lg px-8 py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
-              ফতোয়া পড়ুন
-            </Link>
+          <div className="relative z-10 px-4">
+            <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-6 font-medium tracking-wider" dir="rtl">
+              بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+            </p>
+            <h1 className="text-5xl md:text-7xl font-extrabold text-[#fcfaf7] mb-6 leading-tight tracking-tight drop-shadow-sm">
+              খানকায়ে ইয়াদগারে হাকিমুল উম্মত
+            </h1>
+            <p className="text-xl md:text-2xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-medium leading-relaxed">
+              তাজকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ<br/>
+              <span className="text-lg opacity-80 mt-2 block">তরজুমানে আকাবির আরেফবিল্লাহ হযরত মাওলানা মুফতি মুহসিনুল করিম সাহেব (দাঃবাঃ)</span>
+            </p>
+            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+              <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#1f4e3d] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
+                বয়ান শুনুন →
+              </Link>
+              <Link href="/fatwas" className="bg-transparent hover:bg-[#28634e] text-[#fcfaf7] border border-[#3a735b] font-bold text-lg px-8 py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
+                ফতোয়া পড়ুন
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
-      {/* Majlis Countdown (only renders if admin has set a datetime in Sanity) */}
-      {nextMajlis && <MajlisCountdown nextMajlis={nextMajlis} />}
+      {/* Majlis Countdown */}
+      {nextMajlis && (
+        <ScrollReveal>
+          <MajlisCountdown nextMajlis={nextMajlis} />
+        </ScrollReveal>
+      )}
 
       {/* Latest Bayans Section */}
       <section className="max-w-4xl mx-auto px-2">
@@ -80,21 +86,27 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid gap-4">
-          {displayBayans.map((bayan) => (
-            <BayanCard key={bayan._id} bayan={bayan} />
+          {displayBayans.map((bayan, idx) => (
+            <ScrollReveal key={bayan._id} className={`animation-delay-${(idx % 3) * 100}`}>
+              <BayanCard bayan={bayan} />
+            </ScrollReveal>
           ))}
         </div>
       </section>
 
       {/* Schedule and Map */}
-      <section className="max-w-4xl mx-auto px-2">
-        <ScheduleAndMap />
-      </section>
+      <ScrollReveal>
+        <section className="max-w-4xl mx-auto px-2">
+          <ScheduleAndMap />
+        </section>
+      </ScrollReveal>
 
       {/* Contact Us */}
-      <section className="max-w-4xl mx-auto px-2">
-        <ContactUs />
-      </section>
+      <ScrollReveal>
+        <section className="max-w-4xl mx-auto px-2">
+          <ContactUs />
+        </section>
+      </ScrollReveal>
     </div>
   );
 }

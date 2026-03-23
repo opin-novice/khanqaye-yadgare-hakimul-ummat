@@ -18,6 +18,10 @@ const amiri = Amiri({
 export const metadata = {
   title: "শায়খের বয়ান",
   description: "প্রতিদিনের বয়ান ও আধ্যাত্মিক শিক্ষা",
+  icons: {
+    icon: "/logo_1.png",
+    apple: "/logo_1.png",
+  },
 };
 
 export default function RootLayout({ children }) {

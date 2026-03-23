@@ -8,21 +8,37 @@ import { normalizeArchiveUrl } from "@/lib/archive";
 export default function BayanCard({ bayan }) {
   const [playing, setPlaying] = useState(false);
 
-  const bdCategory = bayan.category || "";
-  // Ensure the audio URL is a stable archive.org/download/ link
-  const stableAudioUrl = normalizeArchiveUrl(bayan.audioUrl);
+  const handleShare = async () => {
+    const shareData = {
+      title: bayan.title,
+      text: `শুনুন: ${bayan.title} (শায়খের বয়ান)`,
+      url: window.location.href, // Or a specific link to the bayan if available
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: Copy to clipboard
+        await navigator.clipboard.writeText(`${shareData.text} - ${shareData.url}`);
+        alert("লিঙ্ক কপি করা হয়েছে!");
+      }
+    } catch (err) {
+      console.log("Error sharing", err);
+    }
+  };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:shadow-md transition-all overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:shadow-md transition-all overflow-hidden group/card">
       {/* Top Row: info + action buttons */}
       <div className="flex justify-between items-center p-5 gap-3">
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-lg md:text-xl text-[#1f4e3d] leading-snug">
+          <h3 className="font-bold text-lg md:text-xl text-[#1f4e3d] leading-snug group-hover/card:text-[#c4a962] transition-colors">
             {bayan.title}
           </h3>
           <div className="flex items-center gap-3 text-sm text-[#708474] mt-2 flex-wrap">
             {bdCategory && (
-              <span className="bg-[#f3eee1] text-[#8c7435] font-bold px-3 py-1 rounded-lg text-xs tracking-wide">
+              <span className="bg-[#f3eee1] text-[#8c7435] font-bold px-3 py-1 rounded-lg text-xs tracking-wide group-hover/card:bg-[#fcfaf7] transition-all">
                 {bdCategory}
               </span>
             )}
@@ -35,7 +51,16 @@ export default function BayanCard({ bayan }) {
 
         {stableAudioUrl && (
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Simple Direct Download Button — Reverted to 'Previous Easy' way */}
+            {/* Share Button (NEW) */}
+            <button
+              onClick={handleShare}
+              title="শেয়ার করুন"
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-[#f3eee1] text-[#8c7435] border border-[#e8dfce] hover:bg-[#1f4e3d] hover:text-white hover:border-[#1f4e3d] transition-all"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            </button>
+
+            {/* Simple Direct Download Button */}
             <a
               href={stableAudioUrl}
               download
