@@ -1,5 +1,6 @@
 import { client } from "@/lib/sanity";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import BayanCard from "@/components/BayanCard";
 import MajlisCountdown from "@/components/MajlisCountdown";
@@ -43,16 +44,15 @@ export default async function Home() {
   return (
     <div className="space-y-12">
       <LiveBanner />
-      <HomeCards newsTicker={newsTicker} />
 
-      {/* Hero Section */}
+      {/* Hero Section / Premium Branding (At the VERY Top) */}
       <ScrollReveal>
-        <section className="text-center py-20 md:py-28 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden">
+        <section className="text-center py-12 md:py-20 bg-[#1f4e3d] rounded-[2.5rem] border border-[#163a2d] shadow-2xl relative overflow-hidden mx-2 md:mx-0">
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#3a735b] opacity-20 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#c4a962] opacity-10 blur-3xl"></div>
 
           <div className="relative z-10 px-4">
-            <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-8 font-medium tracking-wider" dir="rtl">
+            <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-10 font-medium tracking-wider" dir="rtl">
               بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
             </p>
 
@@ -68,27 +68,28 @@ export default async function Home() {
                       fill 
                       className="object-cover"
                       sizes="96px"
+                      priority
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="mt-6 space-y-4">
+              <div className="mt-8 space-y-4">
                 <p className="text-[#8c7435] font-bold text-lg md:text-2xl leading-snug tracking-wide">
                   তরজুমানে আকাবির, আরিফবিল্লাহ, হযরত মাওলানা শাহ
                 </p>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-x-4 gap-y-2">
-                  <h1 className="text-5xl md:text-8xl font-black text-[#0f2b20] leading-none drop-shadow-sm">
+                  <h1 className="text-4xl md:text-7xl font-black text-[#0f2b20] leading-tight drop-shadow-sm">
                     মুফতি মুহসিনুল করিম
                   </h1>
                   <span className="text-[#5c4a1e] text-lg md:text-2xl font-bold md:self-end md:mb-2">
-                     সাহেব দামাত বারাকাতুহুম
+                    সাহেব দামাত বারাকাতুহুম
                   </span>
                 </div>
               </div>
             </div>
 
-            <p className="text-xl md:text-3xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-bold leading-relaxed tracking-tight">
+            <p className="text-xl md:text-4xl text-[#fcfaf7] max-w-2xl mx-auto px-4 mb-12 font-bold leading-relaxed tracking-tight">
               তাযকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
@@ -103,6 +104,9 @@ export default async function Home() {
         </section>
       </ScrollReveal>
 
+      {/* Banners Carousel */}
+      <HomeCards newsTicker={newsTicker} />
+
       {/* Majlis Countdown */}
       {nextMajlis && (
         <ScrollReveal>
@@ -110,7 +114,7 @@ export default async function Home() {
         </ScrollReveal>
       )}
 
-      {/* Special Announcement (NEW) */}
+      {/* Special Announcement */}
       {siteSettings?.showAnnouncement && siteSettings?.announcementMessage && (
         <AnnouncementBox message={siteSettings.announcementMessage} />
       )}
@@ -138,7 +142,6 @@ export default async function Home() {
           <ScheduleAndMap />
         </section>
       </ScrollReveal>
-
 
       {/* Contact Us */}
       <ScrollReveal>
