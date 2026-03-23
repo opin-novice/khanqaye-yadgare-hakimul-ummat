@@ -36,7 +36,13 @@ export default function AudioPlayer({ currentBayan }) {
         <p className="font-bold text-[#fcfaf7] mb-2 text-xl leading-snug drop-shadow-sm line-clamp-2">{currentBayan.title}</p>
         <p className="text-[#d4c398] text-sm mb-6 font-medium tracking-wide">{currentBayan.category}</p>
         
-        <audio controls className="w-full h-12 rounded-xl accent-[#c4a962] bg-[#fcfaf7] shadow-inner" autoPlay src={currentBayan.audioUrl}>
+        <audio 
+          controls 
+          aria-label="বয়ান প্লেয়ার"
+          className="w-full h-12 rounded-xl accent-[#c4a962] bg-[#fcfaf7] shadow-inner" 
+          autoPlay 
+          src={currentBayan.audioUrl}
+        >
           লোড হচ্ছে...
         </audio>
       </div>

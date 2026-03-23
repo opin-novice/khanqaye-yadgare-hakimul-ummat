@@ -31,20 +31,21 @@ export default function Navbar() {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center gap-4 group">
-              <div className="relative w-14 h-14 rounded-full overflow-hidden shadow-md border-2 border-[#c4a962] group-hover:border-[#1f4e3d] transition-colors flex-shrink-0">
+              <div className="w-[91px] h-[91px] relative rounded-full overflow-hidden shadow-md border-2 border-[#c4a962] group-hover:border-[#1f4e3d] transition-colors flex-shrink-0">
                 <Image
                   src="/logo.jpg"
                   alt="খানকায়ে ইয়াদগারে হাকিমুল উম্মত"
                   width={91}
                   height={91}
                   sizes="91px"
+                  quality={80}
                   className="object-cover"
                   priority
                 />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-2xl md:text-3xl text-[#1f4e3d] leading-tight tracking-tight">শায়খের বয়ান</span>
-                <span className="text-xs text-[#6b5621] font-bold tracking-wide uppercase mt-0.5">তাজকিয়াহ ও আত্মশুদ্ধি</span>
+                <span className="text-xs text-[#5c4a1e] font-bold tracking-wide uppercase mt-0.5">তাজকিয়াহ ও আত্মশুদ্ধি</span>
               </div>
             </Link>
           </div>

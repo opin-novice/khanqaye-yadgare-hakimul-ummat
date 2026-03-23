@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    browsersListForSwc: true,
-    legacyBrowsers: false,
     optimizeCss: true,
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'hls.js'],
+    turbo: {
+      root: '.'
+    }
   },
   images: {
     formats: ['image/avif', 'image/webp'],

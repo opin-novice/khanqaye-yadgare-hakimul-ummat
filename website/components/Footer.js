@@ -28,25 +28,25 @@ export default function Footer() {
 
         {/* Khanqah name */}
         <p className="text-[#d4c398] font-bold text-lg mb-1">খানকায়ে ইয়াদগারে হাকিমুল উম্মত</p>
-        <p className="text-[#a8c4b0] text-sm font-medium mb-8">
+        <p className="text-[#b8cfc0] text-sm font-medium mb-8">
           জামিয়া ইসলামিয়া ইউনুছিয়া মাদ্রাসা, ব্রাহ্মণবাড়িয়া
         </p>
 
         {/* Bottom Links */}
         <div className="pt-8 border-t border-[#c4a962]/20 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[#a8c4b0] text-xs font-medium">
+          <p className="text-[#b8cfc0] text-xs font-medium">
             © {new Date().getFullYear()} শায়খের বয়ান। সর্বস্বত্ব সংরক্ষিত।
           </p>
           <div className="flex items-center gap-4 text-xs font-bold text-[#c8dbd0]">
-            <Link href="/" className="hover:text-[#fcfaf7] transition-colors">Home</Link>
+            <Link href="/" className="text-[#c8dbd0] hover:text-[#fcfaf7] transition-colors">Home</Link>
             <span className="text-[#c4a962]/30">|</span>
             <div className="flex gap-3 items-center">
-              <span className="text-[#a8c4b0] font-medium">Support:</span>
-              <a href="https://github.com/opin-novice" target="_blank" rel="noopener noreferrer" className="hover:text-[#fcfaf7] transition-colors border-b border-transparent hover:border-[#fcfaf7]">GitHub</a>
-              <a href="mailto:sayedashraf.opin@gmail.com" className="hover:text-[#fcfaf7] transition-colors border-b border-transparent hover:border-[#fcfaf7]">Email</a>
+              <span className="text-[#b8cfc0] font-medium">Support:</span>
+              <a href="https://github.com/opin-novice" target="_blank" rel="noopener noreferrer" className="text-[#c8dbd0] hover:text-[#fcfaf7] transition-colors border-b border-transparent hover:border-[#fcfaf7]">GitHub</a>
+              <a href="mailto:sayedashraf.opin@gmail.com" className="text-[#c8dbd0] hover:text-[#fcfaf7] transition-colors border-b border-transparent hover:border-[#fcfaf7]">Email</a>
             </div>
             <span className="text-[#c4a962]/30">|</span>
-            <Link href="/privacy" className="hover:text-[#fcfaf7] transition-colors">Privacy Policy</Link>
+            <Link href="/privacy" className="text-[#c8dbd0] hover:text-[#fcfaf7] transition-colors">Privacy Policy</Link>
           </div>
         </div>
       </div>
