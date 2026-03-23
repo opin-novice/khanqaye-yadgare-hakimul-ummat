@@ -15,7 +15,7 @@ export default function BayanCard({ bayan }) {
     const shareData = {
       title: bayan.title,
       text: `শুনুন: ${bayan.title} (শায়খের বয়ান)`,
-      url: window.location.href, // Or a specific link to the bayan if available
+      url: `${window.location.origin}/bayans#bayan-${bayan._id}`,
     };
 
     try {
@@ -32,7 +32,10 @@ export default function BayanCard({ bayan }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:shadow-md transition-all overflow-hidden group/card">
+    <div 
+      id={`bayan-${bayan._id}`}
+      className="bg-white rounded-2xl shadow-sm border border-[#e8dfce] hover:border-[#c4a962] hover:shadow-md transition-all overflow-hidden group/card"
+    >
       {/* Top Row: info + action buttons */}
       <div className="flex justify-between items-center p-5 gap-3">
         <div className="flex-1 min-w-0">

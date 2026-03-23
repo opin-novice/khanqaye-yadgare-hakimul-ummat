@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { formatBengaliMonth, toBengaliNumerals } from "@/lib/bengali";
 import BayanCard from "@/components/BayanCard";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -8,6 +8,23 @@ import ScrollReveal from "@/components/ScrollReveal";
 export default function BayansClient({ initialBayans }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+
+  // Auto-scroll to bayan if hash exists in URL (deep-linking)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#bayan-')) {
+      // Small delay to ensure cards are rendered
+      setTimeout(() => {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Optional: highlight it
+          element.classList.add('ring-4', 'ring-[#c4a962]', 'duration-1000');
+          setTimeout(() => element.classList.remove('ring-4', 'ring-[#c4a962]'), 3000);
+        }
+      }, 800);
+    }
+  }, []);
 
   const filteredBayans = useMemo(() => {
     return initialBayans.filter(bayan => {
