@@ -72,18 +72,20 @@ export default function LiveAudioPlayer({ playbackUrl }) {
     };
   }, [playbackUrl]);
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
     if (!audioRef.current) return;
-    if (audioRef.current.paused) {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(err => {
-          console.error("Playback failed:", err);
-          setError(true);
-        });
-    } else {
-      audioRef.current.pause();
-      setIsPlaying(false);
+    try {
+      if (audioRef.current.paused) {
+        await audioRef.current.play();
+        setIsPlaying(true);
+        setError(false);
+      } else {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    } catch (err) {
+      console.error("Playback failed:", err);
+      setError(true);
     }
   };
 
