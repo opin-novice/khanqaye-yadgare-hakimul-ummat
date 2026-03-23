@@ -12,15 +12,15 @@ export default function MajlisCountdown({ nextMajlis }) {
     if (!nextMajlis?.datetime) return;
 
     const ONE_HOUR = 60 * 60 * 1000;
-    const WEEK = 7 * 24 * 60 * 60 * 1000;
+    const DAY = 24 * 60 * 60 * 1000;
 
     const tick = () => {
       let target = new Date(nextMajlis.datetime).getTime();
       const now = Date.now();
 
-      // Auto-recurrence logic: If more than 1 hour has passed since target, jump 7 days forward
+      // Auto-recurrence logic: If more than 1 hour has passed since target, jump 24 hours forward
       while (now > target + ONE_HOUR) {
-        target += WEEK;
+        target += DAY;
       }
 
       const diff = target - now;
