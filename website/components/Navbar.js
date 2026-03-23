@@ -55,6 +55,9 @@ export default function Navbar() {
             <Link href="/bayans" className="text-[#4a5d4e] hover:text-[#1f4e3d] hover:bg-[#f3eee1] transition-colors text-sm md:text-base px-4 py-2 rounded-xl">
               সকল বয়ান
             </Link>
+            <Link href="/malfuzat" className="text-[#4a5d4e] hover:text-[#1f4e3d] hover:bg-[#f3eee1] transition-colors text-sm md:text-base px-4 py-2 rounded-xl">
+              মালফুজাত
+            </Link>
             <Link href="/fatwas" className="text-[#4a5d4e] hover:text-[#1f4e3d] hover:bg-[#f3eee1] transition-colors text-sm md:text-base px-4 py-2 rounded-xl">
               ফতোয়া
             </Link>
