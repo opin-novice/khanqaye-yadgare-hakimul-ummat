@@ -1,7 +1,7 @@
 export default function ContactUs() {
   return (
     <section className="bg-white border border-[#e8dfce] rounded-[2.5rem] p-8 md:p-12 shadow-sm">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-[#1f4e3d] mb-8">যোগাযোগ করুন</h2>
+      <h2 className="text-3xl md:text-4xl font-extrabold text-[#1f4e3d] mb-8">চ্যানেলের লিঙ্কসমূহ</h2>
 
       <div className="flex flex-col sm:flex-row gap-5">
         {/* WhatsApp */}
