@@ -1,13 +1,15 @@
 import { client } from "@/lib/sanity";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import BayanCard from "@/components/BayanCard";
 import MajlisCountdown from "@/components/MajlisCountdown";
 import ScheduleAndMap from "@/components/ScheduleAndMap";
 import ContactUs from "@/components/ContactUs";
 import HomeCards from "@/components/HomeCards";
-import LiveBanner from "@/components/LiveBanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import AnnouncementBox from "@/components/AnnouncementBox";
+
+const LiveBanner = dynamic(() => import("@/components/LiveBanner"), { ssr: false });
 
 export const revalidate = 60;
 
@@ -61,7 +63,7 @@ export default async function Home() {
               <span className="text-lg opacity-80 mt-2 block">তরজুমানে আকাবির আরেফবিল্লাহ হযরত মাওলানা শাহ মুফতি মুহসিনুল করিম সাহেব (দাঃবাঃ)</span>
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-              <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#1f4e3d] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
+              <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#0f2b20] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">
                 বয়ান শুনুন →
               </Link>
               <Link href="/fatwas" className="bg-transparent hover:bg-[#28634e] text-[#fcfaf7] border border-[#3a735b] font-bold text-lg px-8 py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">

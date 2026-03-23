@@ -35,14 +35,16 @@ export default function Navbar() {
                 <Image
                   src="/logo.jpg"
                   alt="খানকায়ে ইয়াদগারে হাকিমুল উম্মত"
-                  fill
+                  width={91}
+                  height={91}
+                  sizes="91px"
                   className="object-cover"
                   priority
                 />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-2xl md:text-3xl text-[#1f4e3d] leading-tight tracking-tight">শায়খের বয়ান</span>
-                <span className="text-xs text-[#8c7435] font-medium tracking-wide uppercase mt-0.5">তাজকিয়াহ ও আত্মশুদ্ধি</span>
+                <span className="text-xs text-[#6b5621] font-bold tracking-wide uppercase mt-0.5">তাজকিয়াহ ও আত্মশুদ্ধি</span>
               </div>
             </Link>
           </div>

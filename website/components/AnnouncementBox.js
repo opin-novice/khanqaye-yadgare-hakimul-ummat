@@ -33,6 +33,7 @@ export default function AnnouncementBox({ message }) {
           <button 
             onClick={() => setIsVisible(false)}
             className="text-[#b8d0c0] hover:text-[#fcfaf7] transition-colors p-1"
+            aria-label="ঘোষণাটি বন্ধ করুন"
             title="বন্ধ করুন"
           >
             <X className="w-6 h-6" />

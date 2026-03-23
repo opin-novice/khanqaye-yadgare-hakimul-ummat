@@ -40,6 +40,7 @@ export default function HomeCards({ newsTicker = "" }) {
             height={400}
             className="w-full h-auto"
             priority={true}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
           />
         </div>
         
@@ -57,6 +58,7 @@ export default function HomeCards({ newsTicker = "" }) {
               height={isMobile ? 1200 : 400}
               className="w-full h-auto block"
               priority={index === 0} // LCP optimization for first image
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
               quality={75}
             />
           </div>

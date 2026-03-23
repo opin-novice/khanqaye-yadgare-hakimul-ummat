@@ -132,7 +132,11 @@ export default function LiveAudioPlayer({ playbackUrl }) {
         {error && <p className="text-red-400 text-sm">অডিও সংযোগে সমস্যা হচ্ছে, প্লে বাটনে ক্লিক করে আবার চেষ্টা করুন।</p>}
 
         <div className="flex items-center gap-6 pt-4">
-          <button onClick={togglePlay} className="w-16 h-16 rounded-full bg-[#c4a962] flex items-center justify-center text-[#1A2332] hover:scale-105 active:scale-95 transition-all">
+          <button 
+            onClick={togglePlay} 
+            aria-label={isPlaying ? "বয়ান থামান" : "বয়ান চালু করুন"}
+            className="w-16 h-16 rounded-full bg-[#c4a962] flex items-center justify-center text-[#1A2332] hover:scale-105 active:scale-95 transition-all"
+          >
             {isPlaying ? <Pause fill="currentColor" /> : <Play className="ml-1" fill="currentColor" />}
           </button>
           <div className="flex-1 flex items-center gap-3">

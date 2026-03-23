@@ -88,6 +88,7 @@ export default function MalfuzatSection({ malfuzat = [] }) {
                 <button 
                   onClick={() => handleShare(selectedMalfuzat)}
                   className="p-3 bg-white rounded-2xl border border-[#e8dfce] text-[#8c7435] hover:bg-[#1f4e3d] hover:text-white transition-all shadow-sm"
+                  aria-label="প্রবন্ধ শেয়ার করুন"
                   title="শেয়ার করুন"
                 >
                   <Share2 className="w-5 h-5" />
@@ -95,6 +96,7 @@ export default function MalfuzatSection({ malfuzat = [] }) {
                 <button 
                   onClick={() => setSelectedMalfuzat(null)}
                   className="p-3 bg-white rounded-2xl border border-[#e8dfce] text-[#1f4e3d] hover:bg-red-50 hover:text-red-500 transition-all shadow-sm"
+                  aria-label="প্রবন্ধ বন্ধ করুন"
                   title="বন্ধ করুন"
                 >
                   <X className="w-6 h-6" />

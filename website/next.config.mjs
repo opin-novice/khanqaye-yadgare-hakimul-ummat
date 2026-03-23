@@ -2,6 +2,8 @@
 const nextConfig = {
   experimental: {
     browsersListForSwc: true,
+    legacyBrowsers: false,
+    optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
   },
   images: {

@@ -102,6 +102,7 @@ export default function KitabClient({ initialKitabs }) {
               <button 
                 onClick={() => setActivePdfUrl(null)}
                 className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                aria-label="পিডিএফ ভিউয়ার বন্ধ করুন"
                 title="বন্ধ করুন"
               >
                 <X className="w-8 h-8" />

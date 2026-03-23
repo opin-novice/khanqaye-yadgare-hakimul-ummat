@@ -181,12 +181,13 @@ export default function LivePage() {
                 )}
                 <button 
                   onClick={togglePlay} 
+                  aria-label={isPlaying ? "বয়ান থামান" : "বয়ান চালু করুন"}
                   className="relative z-10 w-28 h-28 rounded-full bg-[#c4a962] flex items-center justify-center text-[#0A0F14] shadow-[0_0_50px_rgba(196,169,98,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 group"
                 >
                   {isPlaying ? (
-                    <Pause size={40} fill="currentColor" className="group-hover:scale-110 transition-transform" />
+                    <Pause size={40} fill="currentColor" className="group-hover:scale-110 transition-transform text-[#0A0F14]" />
                   ) : (
-                    <Play size={40} fill="currentColor" className="ml-2 group-hover:scale-110 transition-transform" />
+                    <Play size={40} fill="currentColor" className="ml-2 group-hover:scale-110 transition-transform text-[#0A0F14]" />
                   )}
                 </button>
               </div>

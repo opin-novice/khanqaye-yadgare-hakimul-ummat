@@ -60,6 +60,7 @@ export default function BayanCard({ bayan }) {
             {/* Share Button (NEW) */}
             <button
               onClick={handleShare}
+              aria-label="বয়ান শেয়ার করুন"
               title="শেয়ার করুন"
               className="w-10 h-10 rounded-full flex items-center justify-center bg-[#f3eee1] text-[#8c7435] border border-[#e8dfce] hover:bg-[#1f4e3d] hover:text-white hover:border-[#1f4e3d] transition-all"
             >
@@ -72,6 +73,7 @@ export default function BayanCard({ bayan }) {
               download
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="বয়ান ডাউনলোড করুন"
               title="ডাউনলোড করুন"
               className="w-10 h-10 rounded-full flex items-center justify-center bg-[#f3eee1] text-[#8c7435] border border-[#e8dfce] hover:bg-[#c4a962] hover:text-white hover:border-[#c4a962] transition-all"
             >
@@ -81,6 +83,7 @@ export default function BayanCard({ bayan }) {
             {/* Play / Pause button */}
             <button
               onClick={() => setPlaying(!playing)}
+              aria-label={playing ? "বয়ান থামান" : "বয়ান চালু করুন"}
               title={playing ? "বন্ধ করুন" : "শুনুন"}
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm border
                 ${playing
