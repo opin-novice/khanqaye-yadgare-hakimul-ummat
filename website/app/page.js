@@ -52,15 +52,44 @@ export default async function Home() {
           <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#c4a962] opacity-10 blur-3xl"></div>
 
           <div className="relative z-10 px-4">
-            <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-6 font-medium tracking-wider" dir="rtl">
+            <p className="text-xl md:text-2xl font-[family-name:var(--font-arabic)] text-[#d4c398] mb-8 font-medium tracking-wider" dir="rtl">
               بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
             </p>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-[#fcfaf7] mb-6 leading-tight tracking-tight drop-shadow-sm">
-              খানকায়ে ইয়াদগারে হাকিমুল উম্মত
-            </h1>
-            <p className="text-xl md:text-2xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-medium leading-relaxed">
-              তাজকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ<br/>
-              <span className="text-lg opacity-80 mt-2 block">তরজুমানে আকাবির আরেফবিল্লাহ হযরত মাওলানা শাহ মুফতি মুহসিনুল করিম সাহেব (দাঃবাঃ)</span>
+
+            {/* Premium Branding Card */}
+            <div className="bg-[#fcfaf7] px-6 py-10 md:px-12 md:py-14 rounded-[3rem] shadow-2xl border-[3px] border-[#c4a962] inline-block mb-12 max-w-4xl mx-auto w-full relative">
+              {/* Logo on top */}
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2">
+                <div className="w-24 h-24 rounded-full bg-[#fcfaf7] p-1.5 shadow-xl border-2 border-[#c4a962]">
+                  <div className="w-full h-full rounded-full overflow-hidden relative">
+                    <Image 
+                      src="/logo.jpg" 
+                      alt="Logo" 
+                      fill 
+                      className="object-cover"
+                      sizes="96px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <p className="text-[#8c7435] font-bold text-lg md:text-2xl leading-snug tracking-wide">
+                  তরজুমানে আকাবির, আরিফবিল্লাহ, হযরত মাওলানা শাহ
+                </p>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-x-4 gap-y-2">
+                  <h1 className="text-5xl md:text-8xl font-black text-[#0f2b20] leading-none drop-shadow-sm">
+                    মুফতি মুহসিনুল করিম
+                  </h1>
+                  <span className="text-[#5c4a1e] text-lg md:text-2xl font-bold md:self-end md:mb-2">
+                     সাহেব দামাত বারাকাতুহুম
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xl md:text-3xl text-[#b8d0c0] max-w-2xl mx-auto px-4 mb-12 font-bold leading-relaxed tracking-tight">
+              তাযকিয়াহ ও আত্মশুদ্ধির এক আধ্যাত্মিক পরিবেশ
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
               <Link href="/bayans" className="bg-[#c4a962] hover:bg-[#b09650] text-[#0a1f17] font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center w-full sm:w-auto">

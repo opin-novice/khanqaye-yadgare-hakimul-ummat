@@ -45,7 +45,7 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-2xl md:text-3xl text-[#1f4e3d] leading-tight tracking-tight">শায়খের বয়ান</span>
-                <span className="text-xs text-[#5c4a1e] font-bold tracking-wide uppercase mt-0.5">তাজকিয়াহ ও আত্মশুদ্ধি</span>
+                <span className="text-xs text-[#5c4a1e] font-bold tracking-wide uppercase mt-0.5">তাযকিয়াহ ও আত্মশুদ্ধি</span>
               </div>
             </Link>
           </div>
