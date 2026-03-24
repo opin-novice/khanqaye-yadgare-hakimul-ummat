@@ -8,13 +8,13 @@ export const revalidate = 60;
 
 async function getMalfuzat(slug) {
   return await client.fetch(
-    `*[_type == "malfuzat" && slug.current == $slug][0]`,
+    `*[_type == "malfuzat" && (slug.current == $slug || _id == $slug)][0]`,
     { slug }
   );
 }
 
 export default async function MalfuzatDetailPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   const malfuzat = await getMalfuzat(slug);
 
   if (!malfuzat) {
