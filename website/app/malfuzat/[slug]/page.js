@@ -4,11 +4,11 @@ import { formatBengaliDate } from "@/lib/bengali";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Share2 } from "lucide-react";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 async function getMalfuzat(slug) {
   return await client.fetch(
-    `*[_type == "malfuzat" && (slug.current == $slug || _id == $slug)][0]`,
+    `*[_type == "malfuzat" && (slug.current == $slug || _id == $slug || _id == "drafts." + $slug)][0]`,
     { slug }
   );
 }
@@ -21,7 +21,8 @@ export default async function MalfuzatDetailPage({ params }) {
     return (
       <div className="max-w-4xl mx-auto py-20 text-center">
         <h1 className="text-3xl font-bold text-[#1f4e3d]">প্রবন্ধটি পাওয়া যায়নি</h1>
-        <Link href="/malfuzat" className="mt-4 text-[#8c7435] hover:underline inline-flex items-center gap-2">
+        <p className="text-sm text-gray-400 mt-2 italic">(Looking for: {slug})</p>
+        <Link href="/malfuzat" className="mt-6 text-[#8c7435] hover:underline inline-flex items-center gap-2 bg-white px-6 py-2 rounded-full shadow-sm">
           <ArrowLeft className="w-4 h-4" /> মালফুজাত তালিকায় ফিরে যান
         </Link>
       </div>
