@@ -31,7 +31,7 @@ export default function Navbar() {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center gap-4 group">
-              <div className="w-[91px] h-[91px] relative rounded-full overflow-hidden shadow-md border-2 border-[#c4a962] group-hover:border-[#1f4e3d] transition-colors flex-shrink-0 bg-white p-1">
+              <div className="w-[91px] h-[91px] relative rounded-full overflow-hidden shadow-md border-2 border-[#c4a962] group-hover:border-[#1f4e3d] transition-colors flex-shrink-0 bg-white p-1 flex items-center justify-center">
                 <Image
                   src="/logo.jpg"
                   alt="খানকায়ে ইয়াদগারে হাকিমুল উম্মত"
